@@ -88,6 +88,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 }
 
 // Handle password retrieval
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['forgot_password'])) {
+    // Retrieve email from the form
+    $email = $_POST['email'];
+    
+    // Check if the email exists in the database
+    $sql = "SELECT * FROM registerinfo WHERE email='$email'";
+    $result = $conn->query($sql);
+    
+    if ($result->num_rows > 0) {
+        // Generate a random password reset token
+        $token = md5(uniqid(rand(), true));
+        
+        // Update the user's record in the database with the token
+        $sql_update = "UPDATE registerinfo SET reset_token='$token' WHERE email='$email'";
+        if ($conn->query($sql_update) === TRUE) {
+            // Send email with password reset instructions
+            $to = $email;
+            $subject = "Password Reset Instructions";
+            $message = "Dear User,\r\n\r\nPlease click the following link to reset your password: http://example.com/reset_password.php?token=$token\r\n\r\nThank you.";
+            $headers = "From: $email" . "\r\n" .
+                       "Reply-To: $email" . "\r\n" .
+                       "X-Mailer: PHP/" . phpversion();
+            
+            if (mail($to, $subject, $message, $headers)) {
+                echo "Password reset instructions sent to your email.";
+            } else {
+                echo "Failed to send password reset instructions.";
+            }
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
+    } else {
+        echo "Email not found in our records.";
+    }
+}
 
 // Close connection
 $conn->close();
@@ -208,23 +243,24 @@ $conn->close();
 												Enter your email and to receive instructions
 											</p>
 
-											<form>
-												<fieldset>
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
-															<i class="ace-icon fa fa-envelope"></i>
-														</span>
-													</label>
+											<form method="post" action="">
+    <fieldset>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="email" class="form-control" name="email" placeholder="Email" />
+                <i class="ace-icon fa fa-envelope"></i>
+            </span>
+        </label>
 
-													<div class="clearfix">
-														<button type="button" class="width-35 pull-right btn btn-sm btn-danger">
-															<i class="ace-icon fa fa-lightbulb-o"></i>
-															<span class="bigger-110">Send Me!</span>
-														</button>
-													</div>
-												</fieldset>
-											</form>
+        <div class="clearfix">
+            <button type="submit" name="forgot_password" class="width-35 pull-right btn btn-sm btn-danger">
+                <i class="ace-icon fa fa-lightbulb-o"></i>
+                <span class="bigger-110">Send Me!</span>
+            </button>
+        </div>
+    </fieldset>
+</form>
+
 										</div><!-- /.widget-main -->
 
 										<div class="toolbar center">
