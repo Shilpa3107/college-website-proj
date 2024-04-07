@@ -75,8 +75,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
-        echo "Login successful";
-        // Proceed to user dashboard or another page
+        // Start the session (if not already started)
+        session_start();
+        // Store the username in the session for later use
+        $_SESSION['username'] = $username;
+        // Redirect to index1.php
+        header("Location: index1.php");
+        exit(); // Ensure that no further code is executed after the redirect
     } else {
         echo "Invalid username or password";
     }
