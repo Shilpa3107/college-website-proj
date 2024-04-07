@@ -116,39 +116,40 @@ $conn->close();
 
 											<div class="space-6"></div>
 
-											<form>
-												<fieldset>
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
-															<i class="ace-icon fa fa-user"></i>
-														</span>
-													</label>
+											<form method="post" action="">
+    <fieldset>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="text" class="form-control" name="username" placeholder="Username" />
+                <i class="ace-icon fa fa-user"></i>
+            </span>
+        </label>
 
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
-															<i class="ace-icon fa fa-lock"></i>
-														</span>
-													</label>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="password" class="form-control" name="password" placeholder="Password" />
+                <i class="ace-icon fa fa-lock"></i>
+            </span>
+        </label>
 
-													<div class="space"></div>
+        <div class="space"></div>
 
-													<div class="clearfix">
-														<label class="inline">
-															<input type="checkbox" class="ace" />
-															<span class="lbl"> Remember Me</span>
-														</label>
+        <div class="clearfix">
+            <label class="inline">
+                <input type="checkbox" class="ace" />
+                <span class="lbl"> Remember Me</span>
+            </label>
 
-														<button type="button" class="width-35 pull-right btn btn-sm btn-primary">
-															<i class="ace-icon fa fa-key"></i>
-															<span class="bigger-110">Login</span>
-														</button>
-													</div>
+            <button type="submit" name="login" class="width-35 pull-right btn btn-sm btn-primary">
+                <i class="ace-icon fa fa-key"></i>
+                <span class="bigger-110">Login</span>
+            </button>
+        </div>
 
-													<div class="space-4"></div>
-												</fieldset>
-											</form>
+        <div class="space-4"></div>
+    </fieldset>
+</form>
+
 
 											<div class="social-or-login center">
 												<span class="bigger-110">Or Login Using</span>
