@@ -1595,7 +1595,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         <div>
             <label for="publication-date">Publication Date</label>
             <div class="input-group">
-                <input class="form-control date-picker" id="publication-date" name="publicationdate" type="text" data-date-format="dd-mm-yyyy" />
+                <input class="form-control date-picker" id="publication-date" name="publicationdate" type="text" data-date-format="yyyy-mm-dd" />
                 <span class="input-group-addon">
                     <i class="fa fa-calendar bigger-110"></i>
                 </span>
