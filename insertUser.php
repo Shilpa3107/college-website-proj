@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Form Elements - Ace Admin</title>
+		<title>Research Papers - Ace Admin</title>
 
 		<meta name="description" content="Common form elements and layouts" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -661,27 +661,27 @@
 
 						<ul class="submenu">
 							<li class="active">
-								<a href="form-elements.html">
+								<a href="form-elements.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Form Elements
+									Research Papers
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="form-elements-2.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Form Elements 2
+									Chapters in Edited Volumes
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-wizard.html">
+								<a href="form-wizard.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wizard &amp; Validation
+									Papers in Conference Proceeding
 								</a>
 
 								<b class="arrow"></b>
@@ -907,7 +907,7 @@
 							<li>
 								<a href="#">Forms</a>
 							</li>
-							<li class="active">Form Elements</li>
+							<li class="active">Research Papers</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -990,7 +990,7 @@
 
 						<div class="page-header">
 							<h1>
-								Form Elements
+								Research Papers
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
 									Common form elements and layouts
