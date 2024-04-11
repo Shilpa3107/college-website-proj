@@ -1313,8 +1313,10 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 														</div>
 													</div>
 												</div>
+												
 											</div>
-										</div>
+									<br>
+									<br>
 									</div>
 									
 									<div class="space-24"></div>
@@ -1342,6 +1344,8 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												</div>
 											</div>
 										</div>
+										<br>
+										<br>
 										<div class="col-xs-12 col-sm-4">
 											<div class="control-group">
 												<label class="control-label bolder blue" name="wos">Listed in Web of Science (Thomas Reuters) (Clarivate Analytics)</label>
@@ -1359,6 +1363,9 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												</div>
 											</div>
 										</div>
+										<br>
+										<br>
+										
 										<div class="col-xs-12 col-sm-4">
 											<div class="control-group">
 												<label class="control-label bolder blue" name="scopus">Listed in Scopus</label>
