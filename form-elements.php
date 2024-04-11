@@ -1146,20 +1146,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 										</div>
 									</div>
 									
-									<div class="clearfix form-actions">
-										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button">
-												<i class="ace-icon fa fa-check bigger-110"></i>
-												Submit
-											</button>
 									
-											&nbsp; &nbsp; &nbsp;
-											<button class="btn" type="reset">
-												<i class="ace-icon fa fa-undo bigger-110"></i>
-												Reset
-											</button>
-										</div>
-									</div>
 									
 									<div class="hr hr-24"></div>
 									
@@ -1631,8 +1618,8 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 										</div> -->
 									</div>
 
-									<hr />
-									<div class="row">
+									<!-- <hr /> -->
+									<!-- <div class="row"> -->
 										<!-- <div class="col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
@@ -1751,7 +1738,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 											<!-- </div> -->
 										<!-- </div> -->
 
-										<div class="col-sm-4">
+										<!-- <div class="col-sm-4"> -->
 											<!-- <div class="widget-box">
 												<div class="widget-header">
 													<h4 class="widget-title">
@@ -1788,16 +1775,23 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 													</div>
 												</div>
 											</div> -->
+										<!-- </div> -->
+									<!-- </div> -->
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="button">
+												<i class="ace-icon fa fa-check bigger-110"></i>
+												Submit
+											</button>
+									
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="ace-icon fa fa-undo bigger-110"></i>
+												Reset
+											</button>
 										</div>
 									</div>
-									<div class="clearfix form-actions">
-                                       <div class="col-md-offset-4 col-md-8">
-                                        <button class="btn btn-info" type="submit" name="submit">
-                                           <i class="ace-icon fa fa-check bigger-110"></i>
-                                              Submit
-                                        </button>
-                                       </div>
-                                    </div>
+									
 								</form>
 
 								<!-- <div class="hr hr-18 dotted hr-double"></div> -->
