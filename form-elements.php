@@ -1522,8 +1522,64 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 										
 										
 										</div>
-
 										<div class="col-sm-4">
+										<div class="widget-box">
+												<div class="widget-header">
+													<h4 class="widget-title">Publication Details</h4>
+
+<span class="widget-toolbar">
+    <a href="#" data-action="settings">
+        <i class="ace-icon fa fa-cog"></i>
+    </a>
+    <a href="#" data-action="reload">
+        <i class="ace-icon fa fa-refresh"></i>
+    </a>
+    <a href="#" data-action="collapse">
+        <i class="ace-icon fa fa-chevron-up"></i>
+    </a>
+    <a href="#" data-action="close">
+        <i class="ace-icon fa fa-times"></i>
+    </a>
+</span>
+
+<div class="widget-body">
+    <div class="widget-main">
+        <div>
+            <label for="publication-date">Publication Date</label>
+            <div class="input-group">
+                <input class="form-control date-picker" id="publication-date" name="publicationdate" type="text" data-date-format="yyyy-mm-dd" />
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar bigger-110"></i>
+                </span>
+            </div>
+        </div>
+
+        <hr />
+
+        <div>
+            <label for="publication-year">Publication Year</label>
+            <input class="form-control" type="number" id="publication-year" name="pubyear" placeholder="Enter Publication Year" />
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-xs-6">
+                <label for="page-from">Page From</label>
+                <input class="form-control" type="number" id="page-from" name="pagefrom" placeholder="Enter Page From" />
+            </div>
+
+            <div class="col-xs-6">
+                <label for="page-to">Page To</label>
+                <input class="form-control" type="number" id="page-to" name="pageto" placeholder="Enter Page To" />
+            </div>
+</div>
+														</div>
+													</div>
+												</div>
+											</div>
+</div>
+										<!-- <div class="col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
 													<h4 class="widget-title">jQuery UI Sliders</h4>
@@ -1549,9 +1605,9 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> -->
 
-										<div class="col-sm-4">
+										<!-- <div class="col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
 													<h4 class="widget-title">Spinners</h4>
@@ -1572,12 +1628,12 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> -->
 									</div>
 
 									<hr />
 									<div class="row">
-										<div class="col-sm-4">
+										<!-- <div class="col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
 													<h4 class="widget-title">Publication Details</h4>
@@ -1633,33 +1689,33 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> -->
 									
 									
-										<div class="col-sm-4">
-											<div class="widget-box">
-												<div class="widget-header">
-													<h4 class="widget-title">
+										<!-- <div class="col-sm-4"> -->
+											<!-- <div class="widget-box"> -->
+												<!-- <div class="widget-header">
+													 <h4 class="widget-title">
 														<i class="ace-icon fa fa-tint"></i>
 														Color Picker
-													</h4>
-												</div>
+													</h4> 
+												</div> -->
 
-												<div class="widget-body">
-													<div class="widget-main">
-														<div class="clearfix">
+												<!-- <div class="widget-body"> -->
+													<!-- <div class="widget-main"> -->
+														<!-- <div class="clearfix">
 															<label for="colorpicker1">Color Picker</label>
-														</div>
+														</div> -->
 
-														<div class="control-group">
-															<div class="bootstrap-colorpicker">
+														<!-- <div class="control-group">
+															 <div class="bootstrap-colorpicker">
 																<input id="colorpicker1" type="text" class="input-small" />
-															</div>
+															</div> 
 														</div>
 
-														<hr />
+														<hr /> -->
 
-														<div>
+														<!-- <div>
 															<label for="simple-colorpicker-1">Custom Color Picker</label>
 
 															<select id="simple-colorpicker-1" class="hide">
@@ -1689,14 +1745,14 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 																<option value="#a47ae2">#a47ae2</option>
 																<option value="#555">#555</option>
 															</select>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
+														</div> -->
+													<!-- </div> -->
+												<!-- </div> -->
+											<!-- </div> -->
+										<!-- </div> -->
 
 										<div class="col-sm-4">
-											<div class="widget-box">
+											<!-- <div class="widget-box">
 												<div class="widget-header">
 													<h4 class="widget-title">
 														<i class="ace-icon fa fa-tachometer"></i>
@@ -1731,7 +1787,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 														</div>
 													</div>
 												</div>
-											</div>
+											</div> -->
 										</div>
 									</div>
 									<div class="clearfix form-actions">
@@ -1744,53 +1800,53 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                                     </div>
 								</form>
 
-								<div class="hr hr-18 dotted hr-double"></div>
+								<!-- <div class="hr hr-18 dotted hr-double"></div> -->
 
-								<h4 class="pink">
+								<!-- <h4 class="pink">
 									<i class="ace-icon fa fa-hand-o-right green"></i>
 									<a href="#modal-form" role="button" class="blue" data-toggle="modal"> Form Inside a Modal Box </a>
-								</h4>
+								</h4> -->
 
-								<div class="hr hr-18 dotted hr-double"></div>
-								<h4 class="header green">Form Layouts</h4>
+								<!-- <div class="hr hr-18 dotted hr-double"></div> -->
+								<!-- <h4 class="header green">Form Layouts</h4> -->
 
 								<div class="row">
-									<div class="col-sm-5">
-										<div class="widget-box">
-											<div class="widget-header">
+									<!-- <div class="col-sm-5"> -->
+										<!-- <div class="widget-box"> -->
+											<!-- <div class="widget-header">
 												<h4 class="widget-title">Default</h4>
-											</div>
+											</div> -->
 
-											<div class="widget-body">
-												<div class="widget-main no-padding">
+											<!-- <div class="widget-body"> -->
+												<!-- <div class="widget-main no-padding">
 													<form>
-														<!-- <legend>Form</legend> -->
+														 <legend>Form</legend> 
 														<fieldset>
-															<label>Label name</label>
+															 <label>Label name</label> 
 
-															<input type="text" placeholder="Type something&hellip;" />
+															 <input type="text" placeholder="Type something&hellip;" />
 															<span class="help-block">Example block-level help text here.</span>
 
 															<label class="pull-right">
 																<input type="checkbox" class="ace" />
 																<span class="lbl"> check me out</span>
-															</label>
+															</label> 
 														</fieldset>
 
-														<div class="form-actions center">
+														 <div class="form-actions center">
 															<button type="button" class="btn btn-sm btn-success">
 																Submit
 																<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
 															</button>
-														</div>
+														</div> 
 													</form>
-												</div>
-											</div>
-										</div>
-									</div>
+												</div> -->
+											<!-- </div> -->
+										<!-- </div> -->
+									<!-- </div> -->
 
-									<div class="col-sm-7">
-										<div class="widget-box">
+									<!-- <div class="col-sm-7"> -->
+										<!-- <div class="widget-box">
 											<div class="widget-header">
 												<h4 class="widget-title">Inline Forms</h4>
 											</div>
@@ -1811,16 +1867,16 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 													</form>
 												</div>
 											</div>
-										</div>
+										</div> -->
 
-										<div class="space-6"></div>
+										<!-- <div class="space-6"></div> -->
 
-										<div class="widget-box">
+										<!-- <div class="widget-box">
 											<div class="widget-header widget-header-small">
 												<h5 class="widget-title lighter">Search Form</h5>
-											</div>
+											</div> -->
 
-											<div class="widget-body">
+											<!-- <div class="widget-body">
 												<div class="widget-main">
 													<form class="form-search">
 														<div class="row">
@@ -1875,8 +1931,8 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 													</form>
 												</div>
 											</div>
-										</div>
-									</div>
+										</div> -->
+									<!-- </div> -->
 								</div>
 
 								<div id="modal-form" class="modal" tabindex="-1">
