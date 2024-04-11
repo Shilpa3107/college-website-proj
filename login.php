@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Login Page - Ace Admin</title>
+		<title>Login Page - Amity University</title>
 
 		<meta name="description" content="User login page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -54,9 +54,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $email = $_POST['email'];
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $university = $_POST['university'];
+    $department = $_POST['department'];
+    $emp_id = $_POST['employee_id'];
     
     // Insert user data into the database
-    $sql = "INSERT INTO registerinfo (email, username, password) VALUES ('$email', '$username', '$password')";
+    $sql = "INSERT INTO registerinfo (email, username, password, university, department, emp_id) VALUES ('$email', '$username', '$password', '$university', '$department', '$emp_id')";
     
     if ($conn->query($sql) === TRUE) {
         echo "Registration successful";
@@ -64,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
+
 
 // Handle user login
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
@@ -313,6 +317,29 @@ $conn->close();
             </span>
         </label>
 
+        <!-- New fields for university, department, and employee ID -->
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="text" class="form-control" name="university" placeholder="University" />
+                <i class="ace-icon fa fa-university"></i>
+            </span>
+        </label>
+
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="text" class="form-control" name="department" placeholder="Department" />
+                <i class="ace-icon fa fa-building"></i>
+            </span>
+        </label>
+
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="text" class="form-control" name="employee_id" placeholder="Employee ID" />
+                <i class="ace-icon fa fa-id-badge"></i>
+            </span>
+        </label>
+        
+        <!-- Existing checkbox for user agreement -->
         <label class="block">
             <input type="checkbox" class="ace" />
             <span class="lbl">
@@ -336,6 +363,7 @@ $conn->close();
         </div>
     </fieldset>
 </form>
+
 
 											
 
