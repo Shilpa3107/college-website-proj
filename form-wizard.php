@@ -1479,9 +1479,52 @@
 													</div>
 
 													<div class="step-pane" data-step="3">
-														<div class="center">
-															<h3 class="blue lighter">This is step 3</h3>
-														</div>
+													
+													
+													<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-5">
+        <span class="block input-icon input-icon-right">
+            <input type="number" id="inputVolumeEdition" class="width-100" placeholder="Enter Volume/Edition" />
+            <i class="ace-icon fa fa-book"></i>
+        </span>
+        <div class="help-block col-xs-12 col-sm-reset inline">Volume/Edition</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-5">
+        <span class="block input-icon input-icon-right">
+            <input type="text" id="inputPublicationDate" class="form-control date-picker" placeholder="Select Publication Date" />
+            <i class="ace-icon fa fa-calendar"></i>
+        </span>
+        <div class="help-block col-xs-12 col-sm-reset inline">Publication Date</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-5">
+        <span class="block input-icon input-icon-right">
+            <input type="number" id="inputPublicationYear" class="width-100" placeholder="Enter Publication Year" />
+            <i class="ace-icon fa fa-calendar"></i>
+        </span>
+        <div class="help-block col-xs-12 col-sm-reset inline">Publication Year</div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.date-picker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
+
+
+
+
 													</div>
 
 													<div class="step-pane" data-step="4">
