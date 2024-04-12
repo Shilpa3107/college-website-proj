@@ -52,10 +52,10 @@
     <?php
 // Submit the following to the database
 if($_SERVER['REQUEST_METHOD']=='POST') {
-    // $uni = $_POST['university'];
-    // $department = $_POST['department'];
-    // $faculty = $_POST['faculty_scientist'];
-    // $empid = $_POST['employee_id'];
+    $uni = $_POST['university'];
+    $department = $_POST['department'];
+    $faculty = $_POST['faculty_scientist'];
+    $empid = $_POST['employee_id'];
     $author = $_POST['author_name'];
     $coauthor = $_POST['corresponding_coauthor_name'];
     $booktitle = $_POST['paper_title'];
@@ -103,7 +103,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         // Save $destination to the database if you need to store the file path
         echo '<script>alert("File uploaded successfully")</script>';
     } else {
-        echo "Error uploading file.";
+        // echo "Error uploading file.";
     }
 
     // Connection to database
@@ -117,7 +117,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         die("The connection to DB wasn't established ".mysqli_connect_error($conn));
     }
 
-    $sql="INSERT INTO `researchpapersbyfaculty` (`Author`, `Co-author`, `papertitle`, `journalname`, `article`, `region`, `pubdate`, `pubyear`, `volume`, `pagefrom`, `pageto`, `impact`, `scopus`, `listedin`, `wos`, `peer`, `issn`, `isbn`, `pubname`, `affltn`, `corrauthor`, `citind`, `nocit`, `link`, `evdupload`, `othrinfo`, `ref`) VALUES ('$author', '$coauthor', '$booktitle', '$journalname', '$article', '$National', '$publicationdate', '$pubyear', '$edition', '$pagefrom', '$pageto', '$impact', '$scopus', '$listedin', '$wos', '$peer', '$issn', '$isbn', '$pubname', '$affltn', '$corrauthor', '$citind', '$nocit', '$link', '$destination', '$othrinfo', '$ref')";
+    $sql="INSERT INTO `researchpapersbyfaculty` (`University`, `Department`, `Faculty`, `Employee ID`, `Author`, `Co-author`, `papertitle`, `journalname`, `article`, `region`, `pubdate`, `pubyear`, `volume`, `pagefrom`, `pageto`, `impact`, `scopus`, `listedin`, `wos`, `peer`, `issn`, `isbn`, `pubname`, `affltn`, `corrauthor`, `citind`, `nocit`, `link`, `evdupload`, `othrinfo`, `ref`) VALUES ('$uni', '$department', '$faculty', '$empid', '$author', '$coauthor', '$booktitle', '$journalname', '$article', '$National', '$publicationdate', '$pubyear', '$edition', '$pagefrom', '$pageto', '$impact', '$scopus', '$listedin', '$wos', '$peer', '$issn', '$isbn', '$pubname', '$affltn', '$corrauthor', '$citind', '$nocit', '$link', '$destination', '$othrinfo', '$ref')";
 
     $result=mysqli_query($conn,$sql);
     if($result) {
@@ -759,7 +759,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 							<li class="">
 								<a href="form-wizard.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Papers in Conference Proceeding
+									Wizard &amp; Validation
 								</a>
 
 								<b class="arrow"></b>
@@ -1081,39 +1081,36 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 								<!-- PAGE CONTENT BEGINS -->
 								<form class="form-horizontal" role="form" method="post" action="form-elements.php" enctype="multipart/form-data">
 								<div class="form-group">
-    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
-    <div class="col-sm-9">
-        <input type="text" id="form-field-1" name="university" placeholder="University Name" class="col-xs-10 col-sm-5"  readonly />
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Department </label>
-    <div class="col-sm-9">
-        <input type="text" id="form-field-1-1" name="department" placeholder="Department Name" class="form-control"  readonly />
-    </div>
-</div>
-
-
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1" name="university" placeholder="Enter University Name" class="col-xs-10 col-sm-5" />
+										</div>
+									</div>
 									
-									<!-- <div class="form-group">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Department </label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1-1" name="department" placeholder="Enter Department Name" class="form-control" />
+										</div>
+									</div>
+									
+									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Faculty/Scientist </label>
 										<div class="col-sm-9">
 											<input type="text" id="form-field-2" name="faculty_scientist" placeholder="Enter Faculty/Scientist Name" class="col-xs-10 col-sm-5" />
 											<span class="help-inline col-xs-12 col-sm-7">
-												<span class="middle">Inline help text</span>
+												<!-- <span class="middle">Inline help text</span> -->
 											</span>
 										</div>
-									</div> -->
-<!-- 									
+									</div>
+									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-3"> Employee ID </label>
 										<div class="col-sm-9">
 											<input type="text" id="form-field-3" name="employee_id" placeholder="Enter Employee ID" class="col-xs-5 col-sm-3" />
 											<span class="help-inline col-xs-7 col-sm-9"></span>
 										</div>
-									</div> -->
-									
+									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-4"> Author's Name </label>
 										<div class="col-sm-9">
@@ -1782,19 +1779,20 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 										<!-- </div> -->
 									<!-- </div> -->
 									<div class="clearfix form-actions">
-										<div class="col-md-offset-3 col-md-6 text-center">
-											<button class="btn btn-info" type="button">
-												<i class="ace-icon fa fa-check bigger-110"></i>
-												Submit
-											</button>
+									<div class="col-md-offset-4 col-md-8">
+                                        <button class="btn btn-info" type="submit" name="submit">
+                                           <i class="ace-icon fa fa-check bigger-110"></i>
+                                              Submit
+                                        </button>
+                                       </div>
 									
-											&nbsp; &nbsp; &nbsp;
+											<!-- &nbsp; &nbsp; &nbsp;
 											<button class="btn" type="reset">
 												<i class="ace-icon fa fa-undo bigger-110"></i>
 												Reset
 											</button>
 										</div>
-									</div>
+									</div> -->
 									
 								</form>
 
