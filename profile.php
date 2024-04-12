@@ -668,18 +668,18 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="form-elements-2.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Form Elements 2
+									Chapters in Edited Volumes
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-wizard.html">
+								<a href="form-wizard.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wizard &amp; Validation
+									Papers in Conference Proceeding
 								</a>
 
 								<b class="arrow"></b>
