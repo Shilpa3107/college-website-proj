@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Research Papers - Ace Admin</title>
+		<title>Books Published - Amity University</title>
 
 		<meta name="description" content="Common form elements and layouts" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -49,6 +49,147 @@
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
+    <?php
+$destination = '';
+// Establish database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "scholarsphere";
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the updated data from the form
+    $id = $_POST['user_id'];
+    $university = $_POST['university'];
+    $department = $_POST['department'];
+    $faculty = $_POST['faculty'];
+    $emp_id = $_POST['emp_id'];
+    $otherauthor = $_POST['otherauthor'];
+    $coauthor = $_POST['coauthor'];
+    $booktitle = $_POST['booktitle'];
+    // $journalname=$_POST['journalname'];
+	// $article=$_POST['article'];
+	$National=$_POST['National'];
+    // $region = $_POST['National'];
+    $publicationdate = $_POST['publicationdate'];
+    $pubyear = $_POST['pubyear'];
+    $edition = $_POST['edition'];
+    $pagefrom = $_POST['pagefrom'];
+    $pageto = $_POST['pageto'];
+    // $impact=$_POST['impact'];
+    $scopus = isset($_POST['scopus']) ? $_POST['scopus'] : '';
+    $listedin=$_POST['listedin'];
+    $wos = isset($_POST['wos']) ? $_POST['wos'] : '';
+    $peer = isset($_POST['peer']) ? $_POST['peer'] : '';
+    $issn = $_POST['issn'];
+    $isbn = $_POST['isbn'];
+    $pubname = $_POST['pubname'];
+    $affltn = $_POST['affltn'];
+    $corrauthor = $_POST['corrauthor'];
+    $citind = $_POST['citind'];
+    $nocit = $_POST['nocit'];
+    $link=$_POST['nocit'];
+    if(isset($_FILES['evdupload']) && $_FILES['evdupload']['error'] === UPLOAD_ERR_OK) {
+    $file_name = $_FILES['evdupload']['name'];
+    $file_tmp = $_FILES['evdupload']['tmp_name'];
+    // Move uploaded file to desired directory
+    $upload_directory = 'uploads/'; 
+
+//cheking if dir. to store files is available if not it is being created
+    if (!is_dir($upload_directory)) {
+    // Create the directory with permissions 0755
+    if (!mkdir($upload_directory, 0755, true)) {
+        die("Failed to create directory '$upload_directory'");
+    }
+    }
+
+    $destination = $upload_directory . $file_name;
+    if(move_uploaded_file($file_tmp, $destination)) {
+        // File uploaded successfully
+        // we can save $destination to your database if you need to store the file path
+        echo '<script>alert("File uploaded successfully")</script>';
+    } else {
+        echo "Error uploading file.";
+    }
+}
+    $othrinfo=$_POST['othrinfo'];
+    $ref=$_POST['ref'];
+
+    // SQL to update data in the database
+    $sql = "UPDATE booksbyfaculty SET University='$university', Department='$department', Faculty='$faculty', `Employee ID`='$emp_id', `other Author`='$otherauthor', `Co-author`='$coauthor', booktitle='$booktitle', region='$National', pubdate='$publicationdate', pubyear='$pubyear', volume='$edition', pagefrom='$pagefrom', pageto='$pageto', scopus='$scopus', listedin='$listedin', wos='$wos', peer='$peer', issn='$issn', isbn='$isbn', pubname='$pubname', affltn='$affltn', corrauthor='$corrauthor', citind='$citind', nocit='$nocit',evdupload='$destination', othrinfo='$othrinfo', ref='$ref' WHERE user_id='$id'";
+
+    if ($conn->query($sql) === TRUE) {
+        // Redirect to success page
+        header("location: ReoBooks.php");
+        exit();
+    } else {
+        // Redirect to error page
+        header("location: error.php");
+        exit();
+    }
+}
+
+// Close connection
+mysqli_close($conn);
+?>
+<?php
+// Establish database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "scholarsphere";
+
+$conn = new mysqli($servername, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if ID parameter exists in the URL
+if (isset($_GET['id']) && !empty(trim($_GET['id']))) {
+   
+    $sql = "SELECT * FROM booksbyfaculty WHERE user_id = ?";
+
+    if ($stmt = $conn->prepare($sql)) {
+      
+        $stmt->bind_param("i", $param_id);
+
+        $param_id = $_GET['id'];
+
+        if ($stmt->execute()) {
+        
+            $result = $stmt->get_result();
+
+            if ($result->num_rows == 1) {
+                
+                $row = $result->fetch_assoc();
+            } else {
+       
+                header("location: error.php");
+                exit();
+            }
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+      
+        $stmt->close();
+    }
+} else {
+ 
+    header("location: error.php");
+    exit();
+}
+
+// Close connection
+$conn->close();
+?>
+
+
 
 	<body class="no-skin">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
@@ -64,10 +205,10 @@
 				</button>
 
 				<div class="navbar-header pull-left">
-					<a href="index.html" class="navbar-brand">
+					<a href="index1.php" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
-							Ace Admin
+							Amity University
 						</small>
 					</a>
 				</div>
@@ -349,7 +490,7 @@
 								</li>
 
 								<li>
-									<a href="profile.html">
+									<a href="profile.php">
 										<i class="ace-icon fa fa-user"></i>
 										Profile
 									</a>
@@ -412,7 +553,7 @@
 
 				<ul class="nav nav-list">
 					<li class="">
-						<a href="index.html">
+						<a href="index1.php">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Dashboard </span>
 						</a>
@@ -618,7 +759,7 @@
 						</ul>
 					</li>
 
-					<li class="">
+					<li class="active open">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> View Reports </span>
@@ -629,19 +770,37 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
-								<a href="tables.html">
+                        <li class="">
+								<a href="form-elements.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Simple &amp; Dynamic
+									Research Paper
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="jqgrid.html">
+								<a href="form-elements-2.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									jqGrid plugin
+									Chapters in Edited Volumes
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="form-wizard.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Papers in Conference Proceeding
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="active">
+								<a href="books.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Books Published
 								</a>
 
 								<b class="arrow"></b>
@@ -649,7 +808,7 @@
 						</ul>
 					</li>
 
-					<li class="active open">
+					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
 							<span class="menu-text"> Forms </span>
@@ -660,10 +819,10 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="active">
+							<li class="">
 								<a href="form-elements.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Research Papers
+									Research Paper
 								</a>
 
 								<b class="arrow"></b>
@@ -688,18 +847,9 @@
 							</li>
 
 							<li class="">
-								<a href="wysiwyg.html">
+								<a href="books.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wysiwyg &amp; Markdown
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="dropzone.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Dropzone File Upload
+									Books Published
 								</a>
 
 								<b class="arrow"></b>
@@ -753,7 +903,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="profile.html">
+								<a href="profile.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									User Profile
 								</a>
@@ -816,7 +966,7 @@
 							</li>
 
 							<li class="">
-								<a href="login.html">
+								<a href="login.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Login &amp; Register
 								</a>
@@ -907,7 +1057,7 @@
 							<li>
 								<a href="#">Forms</a>
 							</li>
-							<li class="active">Research Papers</li>
+							<li class="active">Books</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -990,793 +1140,318 @@
 
 						<div class="page-header">
 							<h1>
-								Research Papers
+								Books
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
 									Common form elements and layouts
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
-
+						
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<form class="form-horizontal" role="form">
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
-
+								<form class="form-horizontal" role="form" method="post" action="editReoBooks.php" enctype="multipart/form-data">
+								<input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
+                                <div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5" />
+											<input type="text" id="form-field-1" name="university" value="<?php echo $row['University']; ?>" placeholder="Enter University Name" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
-
+									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Full Length </label>
-
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Department </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" />
+											<input type="text" id="form-field-1" name="department" value="<?php echo $row['Department']; ?>" placeholder="Enter Department Name" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
-
-									<div class="space-4"></div>
-
+									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Password Field </label>
-
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Faculty/Scientist </label>
 										<div class="col-sm-9">
-											<input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5" />
+											<input type="text" id="form-field-2" name="faculty" value="<?php echo $row['Faculty']; ?>" placeholder="Enter Faculty/Scientist Name" class="col-xs-10 col-sm-5" />
 											<span class="help-inline col-xs-12 col-sm-7">
-												<span class="middle">Inline help text</span>
+												<!-- <span class="middle">Inline help text</span> -->
 											</span>
 										</div>
 									</div>
-
-									<div class="space-4"></div>
-
+									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Readonly field </label>
-
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-3"> Employee ID </label>
 										<div class="col-sm-9">
-											<input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="This text field is readonly!" />
-											<span class="help-inline col-xs-12 col-sm-7">
-												<label class="middle">
-													<input class="ace" type="checkbox" id="id-disable-check" />
-													<span class="lbl"> Disable it!</span>
-												</label>
-											</span>
+											<input type="text" id="form-field-3" name="emp_id" value="<?php echo $row['Employee ID']; ?>" placeholder="Enter Employee ID" class="col-xs-10 col-sm-5" />
+											<span class="help-inline col-xs-7 col-sm-9"></span>
 										</div>
 									</div>
-
-									<div class="space-4"></div>
-
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-4">Relative Sizing</label>
-
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-4"> Author's Name </label>
 										<div class="col-sm-9">
-											<input class="input-sm" type="text" id="form-field-4" placeholder=".input-sm" />
-											<div class="space-2"></div>
-
-											<div class="help-block" id="input-size-slider"></div>
+											<input type="text" id="form-field-4" name="otherauthor" value="<?php echo $row['other Author']; ?>" placeholder="Enter Author's Name" class="col-xs-10 col-sm-5" />
+											
 										</div>
 									</div>
-
+									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Grid Sizing</label>
-
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-5"> Corresponding/Co-author's Name </label>
 										<div class="col-sm-9">
 											<div class="clearfix">
-												<input class="col-xs-1" type="text" id="form-field-5" placeholder=".col-xs-1" />
+												<input type="text" id="form-field-5" name="coauthor" value="<?php echo $row['Co-author']; ?>" placeholder="Enter Corresponding/Co-author's Name" class="col-xs-10 col-sm-5" />
 											</div>
-
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right"> Title of Book </label>
+										<div class="col-sm-9">
+											<input type="text" name="booktitle" value="<?php echo $row['booktitle']; ?>" placeholder="Enter Title of Paper" class="input-sm" />
 											<div class="space-2"></div>
-
-											<div class="help-block" id="input-span-slider"></div>
 										</div>
 									</div>
-
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right">Input with Icon</label>
-
-										<div class="col-sm-9">
-											<span class="input-icon">
-												<input type="text" id="form-field-icon-1" />
-												<i class="ace-icon fa fa-leaf blue"></i>
-											</span>
-
-											<span class="input-icon input-icon-right">
-												<input type="text" id="form-field-icon-2" />
-												<i class="ace-icon fa fa-leaf green"></i>
-											</span>
-										</div>
-									</div>
-
-									<div class="space-4"></div>
-
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-6">Tooltip and help button</label>
-
-										<div class="col-sm-9">
-											<input data-rel="tooltip" type="text" id="form-field-6" placeholder="Tooltip on hover" title="Hello Tooltip!" data-placement="bottom" />
-											<span class="help-button" data-rel="popover" data-trigger="hover" data-placement="left" data-content="More details." title="Popover on hover">?</span>
-										</div>
-									</div>
-
-									<div class="space-4"></div>
-
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-tags">Tag input</label>
-
-										<div class="col-sm-9">
-											<div class="inline">
-												<input type="text" name="tags" id="form-field-tags" value="Tag Input Control" placeholder="Enter tags ..." />
-											</div>
-										</div>
-									</div>
-
-									<div class="clearfix form-actions">
-										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button">
-												<i class="ace-icon fa fa-check bigger-110"></i>
-												Submit
-											</button>
-
-											&nbsp; &nbsp; &nbsp;
-											<button class="btn" type="reset">
-												<i class="ace-icon fa fa-undo bigger-110"></i>
-												Reset
-											</button>
-										</div>
-									</div>
-
+									
 									<div class="hr hr-24"></div>
-
+									
 									<div class="row">
 										<div class="col-xs-12 col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
-													<h4 class="widget-title">Text Area</h4>
-
+													<h4 class="widget-title">Book Submission</h4>
 													<div class="widget-toolbar">
 														<a href="#" data-action="collapse">
 															<i class="ace-icon fa fa-chevron-up"></i>
 														</a>
-
 														<a href="#" data-action="close">
 															<i class="ace-icon fa fa-times"></i>
 														</a>
 													</div>
 												</div>
-
 												<div class="widget-body">
 													<div class="widget-main">
 														<div>
-															<label for="form-field-8">Default</label>
-
-															<textarea class="form-control" id="form-field-8" placeholder="Default Text"></textarea>
+															<label for="publisher">Name of Publisher</label>
+															<input type="text" name ="pubname" value="<?php echo $row['pubname']; ?>" class="form-control" id="publisher" placeholder="Enter Name of Publisher">
 														</div>
-
 														<hr />
-
 														<div>
-															<label for="form-field-9">With Character Limit</label>
-
-															<textarea class="form-control limited" id="form-field-9" maxlength="50"></textarea>
+															<label for="institutional-affiliations">Institutional Affiliations</label>
+															<input type="text" name="affltn" value="<?php echo $row['affltn']; ?>" class="form-control" id="institutional-affiliations" placeholder="Enter Institutional Affiliations">
 														</div>
-
 														<hr />
-
 														<div>
-															<label for="form-field-11">Autosize</label>
-
-															<textarea id="form-field-11" class="autosize-transition form-control"></textarea>
+															<label for="corresponding-author">Corresponding Author</label>
+															<input type="text" name="corrauthor" value="<?php echo $row['corrauthor']; ?>" class="form-control" id="corresponding-author" placeholder="Enter Corresponding Author">
+														</div>
+														<hr />
+														<div>
+															<label for="additional-info">Any Other Information</label>
+															<input type="text" class="form-control" name="othrinfo" value="<?php echo $row['othrinfo']; ?>" id="additional-info" placeholder="Enter Any Other Information"></input>
+														</div>
+														<hr />
+														<div>
+															<label for="reference">Reference</label>
+															<input type="text" class="form-control" name="ref" value="<?php echo $row['ref']; ?>" id="reference" placeholder="Enter Reference"></input>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div><!-- /.span -->
-
+										</div>
 										<div class="col-xs-12 col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
-													<h4 class="widget-title">Masked Input</h4>
-
+													<h4 class="widget-title">Publication Details</h4>
 													<span class="widget-toolbar">
 														<a href="#" data-action="settings">
 															<i class="ace-icon fa fa-cog"></i>
 														</a>
-
 														<a href="#" data-action="reload">
 															<i class="ace-icon fa fa-refresh"></i>
 														</a>
-
 														<a href="#" data-action="collapse">
 															<i class="ace-icon fa fa-chevron-up"></i>
 														</a>
-
 														<a href="#" data-action="close">
 															<i class="ace-icon fa fa-times"></i>
 														</a>
 													</span>
 												</div>
-
 												<div class="widget-body">
 													<div class="widget-main">
 														<div>
-															<label for="form-field-mask-1">
-																Date
-																<small class="text-success">99/99/9999</small>
-															</label>
-
-															<div class="input-group">
-																<input class="form-control input-mask-date" type="text" id="form-field-mask-1" />
-																<span class="input-group-btn">
-																	<button class="btn btn-sm btn-default" type="button">
-																		<i class="ace-icon fa fa-calendar bigger-110"></i>
-																		Go!
-																	</button>
-																</span>
-															</div>
+															<label for="volume-edition">Volume/Edition</label>
+															<input class="form-control" name="edition"  value="<?php echo $row['volume']; ?>" type="number" id="volume-edition" placeholder="Enter Volume/Edition" />
 														</div>
-
 														<hr />
 														<div>
-															<label for="form-field-mask-2">
-																Phone
-																<small class="text-warning">(999) 999-9999</small>
-															</label>
-
-															<div class="input-group">
-																<span class="input-group-addon">
-																	<i class="ace-icon fa fa-phone"></i>
-																</span>
-
-																<input class="form-control input-mask-phone" type="text" id="form-field-mask-2" />
-															</div>
+															<label for="issn">ISSN</label>
+															<input class="form-control" name="issn" value="<?php echo $row['issn']; ?>"  type="text" id="issn" placeholder="Enter ISSN" />
 														</div>
-
 														<hr />
 														<div>
-															<label for="form-field-mask-3">
-																Product Key
-																<small class="text-error">a*-999-a999</small>
-															</label>
-
-															<div class="input-group">
-																<input class="form-control input-mask-product" type="text" id="form-field-mask-3" />
-																<span class="input-group-addon">
-																	<i class="ace-icon fa fa-key"></i>
-																</span>
-															</div>
+															<label for="isbn">ISBN</label>
+															<input class="form-control" name="isbn" value="<?php echo $row['isbn']; ?>"  type="text" id="isbn" placeholder="Enter ISBN" />
 														</div>
-
 														<hr />
 														<div>
-															<label for="form-field-mask-4">
-																Eye Script
-																<small class="text-info">~9.99 ~9.99 999</small>
-															</label>
-
-															<div>
-																<input class="input-medium input-mask-eyescript" type="text" id="form-field-mask-4" />
-															</div>
+															<label for="citation-index">Citation Index</label>
+															<input class="form-control" name="citind" value="<?php echo $row['citind']; ?>"  type="number" id="citation-index" placeholder="Enter Citation Index" />
 														</div>
+														<hr />
+														<div>
+															<label for="num-citations">Number of Citations</label>
+															<input class="form-control" name = "nocit"  value="<?php echo $row['nocit']; ?>"  type="number" id="num-citations" placeholder="Enter Number of Citations" />
+														</div>
+													
+														
+													
 													</div>
 												</div>
 											</div>
-										</div><!-- /.span -->
-
+										</div>
 										<div class="col-xs-12 col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
-													<h4 class="widget-title">Select Box</h4>
-
+													<h4 class="widget-title">Publication Details</h4>
 													<span class="widget-toolbar">
 														<a href="#" data-action="settings">
 															<i class="ace-icon fa fa-cog"></i>
 														</a>
-
 														<a href="#" data-action="reload">
 															<i class="ace-icon fa fa-refresh"></i>
 														</a>
-
 														<a href="#" data-action="collapse">
 															<i class="ace-icon fa fa-chevron-up"></i>
 														</a>
-
 														<a href="#" data-action="close">
 															<i class="ace-icon fa fa-times"></i>
 														</a>
 													</span>
 												</div>
-
 												<div class="widget-body">
 													<div class="widget-main">
 														<div>
-															<label for="form-field-select-1">Default</label>
-
-															<select class="form-control" id="form-field-select-1">
+															<label for="region">Region</label>
+															<select class="form-control" id="region" name="National" >
 																<option value=""></option>
-																<option value="AL">Alabama</option>
-																<option value="AK">Alaska</option>
-																<option value="AZ">Arizona</option>
-																<option value="AR">Arkansas</option>
-																<option value="CA">California</option>
-																<option value="CO">Colorado</option>
-																<option value="CT">Connecticut</option>
-																<option value="DE">Delaware</option>
-																<option value="FL">Florida</option>
-																<option value="GA">Georgia</option>
-																<option value="HI">Hawaii</option>
-																<option value="ID">Idaho</option>
-																<option value="IL">Illinois</option>
-																<option value="IN">Indiana</option>
-																<option value="IA">Iowa</option>
-																<option value="KS">Kansas</option>
-																<option value="KY">Kentucky</option>
-																<option value="LA">Louisiana</option>
-																<option value="ME">Maine</option>
-																<option value="MD">Maryland</option>
-																<option value="MA">Massachusetts</option>
-																<option value="MI">Michigan</option>
-																<option value="MN">Minnesota</option>
-																<option value="MS">Mississippi</option>
-																<option value="MO">Missouri</option>
-																<option value="MT">Montana</option>
-																<option value="NE">Nebraska</option>
-																<option value="NV">Nevada</option>
-																<option value="NH">New Hampshire</option>
-																<option value="NJ">New Jersey</option>
-																<option value="NM">New Mexico</option>
-																<option value="NY">New York</option>
-																<option value="NC">North Carolina</option>
-																<option value="ND">North Dakota</option>
-																<option value="OH">Ohio</option>
-																<option value="OK">Oklahoma</option>
-																<option value="OR">Oregon</option>
-																<option value="PA">Pennsylvania</option>
-																<option value="RI">Rhode Island</option>
-																<option value="SC">South Carolina</option>
-																<option value="SD">South Dakota</option>
-																<option value="TN">Tennessee</option>
-																<option value="TX">Texas</option>
-																<option value="UT">Utah</option>
-																<option value="VT">Vermont</option>
-																<option value="VA">Virginia</option>
-																<option value="WA">Washington</option>
-																<option value="WV">West Virginia</option>
-																<option value="WI">Wisconsin</option>
-																<option value="WY">Wyoming</option>
+																<option value="National" <?php if($row['region'] == 'National') echo 'selected'; ?>>National</option>
+                                                                <option value="International" <?php if($row['region'] == 'International') echo 'selected'; ?>>International</option>
 															</select>
 														</div>
-
 														<hr />
 														<div>
-															<label for="form-field-select-2">Multiple</label>
-
-															<select class="form-control" id="form-field-select-2" multiple="multiple">
-																<option value="AL">Alabama</option>
-																<option value="AK">Alaska</option>
-																<option value="AZ">Arizona</option>
-																<option value="AR">Arkansas</option>
-																<option value="CA">California</option>
-																<option value="CO">Colorado</option>
-																<option value="CT">Connecticut</option>
-																<option value="DE">Delaware</option>
-																<option value="FL">Florida</option>
-																<option value="GA">Georgia</option>
-																<option value="HI">Hawaii</option>
-																<option value="ID">Idaho</option>
-																<option value="IL">Illinois</option>
-																<option value="IN">Indiana</option>
-																<option value="IA">Iowa</option>
-																<option value="KS">Kansas</option>
-																<option value="KY">Kentucky</option>
-																<option value="LA">Louisiana</option>
-																<option value="ME">Maine</option>
-																<option value="MD">Maryland</option>
-																<option value="MA">Massachusetts</option>
-																<option value="MI">Michigan</option>
-																<option value="MN">Minnesota</option>
-																<option value="MS">Mississippi</option>
-																<option value="MO">Missouri</option>
-																<option value="MT">Montana</option>
-																<option value="NE">Nebraska</option>
-																<option value="NV">Nevada</option>
-																<option value="NH">New Hampshire</option>
-																<option value="NJ">New Jersey</option>
-																<option value="NM">New Mexico</option>
-																<option value="NY">New York</option>
-																<option value="NC">North Carolina</option>
-																<option value="ND">North Dakota</option>
-																<option value="OH">Ohio</option>
-																<option value="OK">Oklahoma</option>
-																<option value="OR">Oregon</option>
-																<option value="PA">Pennsylvania</option>
-																<option value="RI">Rhode Island</option>
-																<option value="SC">South Carolina</option>
-																<option value="SD">South Dakota</option>
-																<option value="TN">Tennessee</option>
-																<option value="TX">Texas</option>
-																<option value="UT">Utah</option>
-																<option value="VT">Vermont</option>
-																<option value="VA">Virginia</option>
-																<option value="WA">Washington</option>
-																<option value="WV">West Virginia</option>
-																<option value="WI">Wisconsin</option>
-																<option value="WY">Wyoming</option>
-															</select>
-														</div>
-
-														<hr />
-
-														<div>
-															<label for="form-field-select-3">Chosen</label>
-
-															<br />
-															<select class="chosen-select form-control" id="form-field-select-3" data-placeholder="Choose a State...">
-																<option value="">  </option>
-																<option value="AL">Alabama</option>
-																<option value="AK">Alaska</option>
-																<option value="AZ">Arizona</option>
-																<option value="AR">Arkansas</option>
-																<option value="CA">California</option>
-																<option value="CO">Colorado</option>
-																<option value="CT">Connecticut</option>
-																<option value="DE">Delaware</option>
-																<option value="FL">Florida</option>
-																<option value="GA">Georgia</option>
-																<option value="HI">Hawaii</option>
-																<option value="ID">Idaho</option>
-																<option value="IL">Illinois</option>
-																<option value="IN">Indiana</option>
-																<option value="IA">Iowa</option>
-																<option value="KS">Kansas</option>
-																<option value="KY">Kentucky</option>
-																<option value="LA">Louisiana</option>
-																<option value="ME">Maine</option>
-																<option value="MD">Maryland</option>
-																<option value="MA">Massachusetts</option>
-																<option value="MI">Michigan</option>
-																<option value="MN">Minnesota</option>
-																<option value="MS">Mississippi</option>
-																<option value="MO">Missouri</option>
-																<option value="MT">Montana</option>
-																<option value="NE">Nebraska</option>
-																<option value="NV">Nevada</option>
-																<option value="NH">New Hampshire</option>
-																<option value="NJ">New Jersey</option>
-																<option value="NM">New Mexico</option>
-																<option value="NY">New York</option>
-																<option value="NC">North Carolina</option>
-																<option value="ND">North Dakota</option>
-																<option value="OH">Ohio</option>
-																<option value="OK">Oklahoma</option>
-																<option value="OR">Oregon</option>
-																<option value="PA">Pennsylvania</option>
-																<option value="RI">Rhode Island</option>
-																<option value="SC">South Carolina</option>
-																<option value="SD">South Dakota</option>
-																<option value="TN">Tennessee</option>
-																<option value="TX">Texas</option>
-																<option value="UT">Utah</option>
-																<option value="VT">Vermont</option>
-																<option value="VA">Virginia</option>
-																<option value="WA">Washington</option>
-																<option value="WV">West Virginia</option>
-																<option value="WI">Wisconsin</option>
-																<option value="WY">Wyoming</option>
-															</select>
-														</div>
-
-														<hr />
-														<div>
-															<div class="row">
-																<div class="col-sm-6">
-																	<span class="bigger-110">Multiple</span>
-																</div><!-- /.span -->
-
-																<div class="col-sm-6">
-																	<span class="pull-right inline">
-																		<span class="grey">style:</span>
-
-																		<span class="btn-toolbar inline middle no-margin">
-																			<span id="chosen-multiple-style" data-toggle="buttons" class="btn-group no-margin">
-																				<label class="btn btn-xs btn-yellow active">
-																					1
-																					<input type="radio" value="1" />
-																				</label>
-
-																				<label class="btn btn-xs btn-yellow">
-																					2
-																					<input type="radio" value="2" />
-																				</label>
-																			</span>
-																		</span>
-																	</span>
-																</div><!-- /.span -->
-															</div>
-
-															<div class="space-2"></div>
-
-															<select multiple="" class="chosen-select form-control" id="form-field-select-4" data-placeholder="Choose a State...">
-																<option value="AL">Alabama</option>
-																<option value="AK">Alaska</option>
-																<option value="AZ">Arizona</option>
-																<option value="AR">Arkansas</option>
-																<option value="CA">California</option>
-																<option value="CO">Colorado</option>
-																<option value="CT">Connecticut</option>
-																<option value="DE">Delaware</option>
-																<option value="FL">Florida</option>
-																<option value="GA">Georgia</option>
-																<option value="HI">Hawaii</option>
-																<option value="ID">Idaho</option>
-																<option value="IL">Illinois</option>
-																<option value="IN">Indiana</option>
-																<option value="IA">Iowa</option>
-																<option value="KS">Kansas</option>
-																<option value="KY">Kentucky</option>
-																<option value="LA">Louisiana</option>
-																<option value="ME">Maine</option>
-																<option value="MD">Maryland</option>
-																<option value="MA">Massachusetts</option>
-																<option value="MI">Michigan</option>
-																<option value="MN">Minnesota</option>
-																<option value="MS">Mississippi</option>
-																<option value="MO">Missouri</option>
-																<option value="MT">Montana</option>
-																<option value="NE">Nebraska</option>
-																<option value="NV">Nevada</option>
-																<option value="NH">New Hampshire</option>
-																<option value="NJ">New Jersey</option>
-																<option value="NM">New Mexico</option>
-																<option value="NY">New York</option>
-																<option value="NC">North Carolina</option>
-																<option value="ND">North Dakota</option>
-																<option value="OH">Ohio</option>
-																<option value="OK">Oklahoma</option>
-																<option value="OR">Oregon</option>
-																<option value="PA">Pennsylvania</option>
-																<option value="RI">Rhode Island</option>
-																<option value="SC">South Carolina</option>
-																<option value="SD">South Dakota</option>
-																<option value="TN">Tennessee</option>
-																<option value="TX">Texas</option>
-																<option value="UT">Utah</option>
-																<option value="VT">Vermont</option>
-																<option value="VA">Virginia</option>
-																<option value="WA">Washington</option>
-																<option value="WV">West Virginia</option>
-																<option value="WI">Wisconsin</option>
-																<option value="WY">Wyoming</option>
+															<label for="listing">Listing</label>
+															<select class="form-control" id="listing" name="listedin">
+																<option value=""></option>
+																<option <?php if($row['listedin'] == 'UGC') echo 'selected'; ?>>UGC</option>
+                                                                <option <?php if($row['listedin'] == 'PubMed') echo 'selected'; ?>>PubMed</option>
+                                                                <option <?php if($row['listedin'] == 'ICI') echo 'selected'; ?>>ICI</option>
+                                                                <option <?php if($row['listedin'] == 'Others') echo 'selected'; ?>>Others</option>
 															</select>
 														</div>
 													</div>
 												</div>
+												
 											</div>
-										</div><!-- /.span -->
-									</div><!-- /.row -->
-
+									<br>
+									<br>
+									</div>
+									
 									<div class="space-24"></div>
-
+									
 									<h3 class="header smaller lighter blue">
-										Checkboxes & Radio
-										<small>All Checkboxes, Radios and Switch Buttons Are Pure CSS</small>
+										Peer Review & Listings
+										<small>Peer Review Status and Listing Information</small>
 									</h3>
-
+									
 									<div class="row">
-										<div class="col-xs-12 col-sm-5">
+										<div class="col-xs-12 col-sm-4">
 											<div class="control-group">
-												<label class="control-label bolder blue">Checkbox</label>
-
-												<div class="checkbox">
+												<label class="control-label bolder blue" name="peer">Peer Reviewed</label>
+												<div class="radio inline">
 													<label>
-														<input name="form-field-checkbox" type="checkbox" class="ace" />
-														<span class="lbl"> choice 1</span>
+														<input name="peer-reviewed" <?php if($row['peer'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="y" />
+														<span class="lbl"> Yes</span>
 													</label>
 												</div>
-
-												<div class="checkbox">
+												<div class="radio inline">
 													<label>
-														<input name="form-field-checkbox" type="checkbox" class="ace" />
-														<span class="lbl"> choice 2</span>
-													</label>
-												</div>
-
-												<div class="checkbox">
-													<label>
-														<input name="form-field-checkbox" class="ace ace-checkbox-2" type="checkbox" />
-														<span class="lbl"> choice 3</span>
-													</label>
-												</div>
-
-												<div class="checkbox">
-													<label class="block">
-														<input name="form-field-checkbox" disabled="" type="checkbox" class="ace" />
-														<span class="lbl"> disabled</span>
-													</label>
-												</div>
-
-												<div class="checkbox">
-													<label class="block">
-														<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
-														<span class="lbl bigger-120"> large checkbox</span>
+														<input name="peer-reviewed" <?php if($row['peer'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="n" />
+														<span class="lbl"> No</span>
 													</label>
 												</div>
 											</div>
 										</div>
-
-										<div class="col-xs-12 col-sm-6">
+										<br>
+										<br>
+										<div class="col-xs-12 col-sm-4">
 											<div class="control-group">
-												<label class="control-label bolder blue">Radio</label>
-
-												<div class="radio">
+												<label class="control-label bolder blue" name="wos">Listed in Web of Science (Thomas Reuters) (Clarivate Analytics)</label>
+												<div class="radio inline">
 													<label>
-														<input name="form-field-radio" type="radio" class="ace" />
-														<span class="lbl"> radio option 1</span>
+														<input name="web-of-science" <?php if($row['wos'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="y" />
+														<span class="lbl"> Yes</span>
 													</label>
 												</div>
-
-												<div class="radio">
+												<div class="radio inline">
 													<label>
-														<input name="form-field-radio" type="radio" class="ace" />
-														<span class="lbl"> radio option 2</span>
-													</label>
-												</div>
-
-												<div class="radio">
-													<label>
-														<input name="form-field-radio" type="radio" class="ace" />
-														<span class="lbl"> radio option 3</span>
-													</label>
-												</div>
-
-												<div class="radio">
-													<label>
-														<input disabled="" name="form-field-radio" type="radio" class="ace" />
-														<span class="lbl"> disabled</span>
-													</label>
-												</div>
-
-												<div class="radio">
-													<label>
-														<input name="form-field-radio" type="radio" class="ace input-lg" />
-														<span class="lbl bigger-120"> large radio</span>
+														<input name="web-of-science" <?php if($row['wos'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="n" />
+														<span class="lbl"> No</span>
 													</label>
 												</div>
 											</div>
 										</div>
-									</div><!-- /.row -->
-
-									<hr />
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3">On/Off Switches</label>
-
-										<div class="controls col-xs-12 col-sm-9">
-											<div class="row">
-												<div class="col-xs-3">
+										<br>
+										<br>
+										
+										<div class="col-xs-12 col-sm-4">
+											<div class="control-group">
+												<label class="control-label bolder blue" name="scopus">Listed in Scopus</label>
+												<div class="radio inline">
 													<label>
-														<input name="switch-field-1" class="ace ace-switch" type="checkbox" />
-														<span class="lbl"></span>
+														<input name="scopus" <?php if($row['scopus'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="y" />
+														<span class="lbl"> Yes</span>
 													</label>
 												</div>
-
-												<div class="col-xs-3">
+												<div class="radio inline">
 													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-2" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-3" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch" type="checkbox" />
-														<span class="lbl" data-lbl="CUS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOM"></span>
-													</label>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-4" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-6" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-7" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch btn-rotate" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-4 btn-rotate" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-4 btn-empty" type="checkbox" />
-														<span class="lbl"></span>
-													</label>
-												</div>
-
-												<div class="col-xs-3">
-													<label>
-														<input name="switch-field-1" class="ace ace-switch ace-switch-4 btn-flat" type="checkbox" />
-														<span class="lbl"></span>
+														<input name="scopus" <?php if($row['scopus'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="n" />
+														<span class="lbl"> No</span>
 													</label>
 												</div>
 											</div>
 										</div>
 									</div>
+									
+									
+									<!-- /.row -->
 
 									<hr />
+									<!-- <hr /> -->
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
-													<h4 class="widget-title">Custom File Input</h4>
-
+													<h4 class="widget-title">Evidence (Upload)</h4>
 													<div class="widget-toolbar">
 														<a href="#" data-action="collapse">
 															<i class="ace-icon fa fa-chevron-up"></i>
 														</a>
-
 														<a href="#" data-action="close">
 															<i class="ace-icon fa fa-times"></i>
 														</a>
 													</div>
 												</div>
-
 												<div class="widget-body">
 													<div class="widget-main">
 														<div class="form-group">
 															<div class="col-xs-12">
-																<input type="file" id="id-input-file-2" />
+																<input type="file" id="id-input-file-2" name="evdupload" />
 															</div>
 														</div>
-
 														<div class="form-group">
 															<div class="col-xs-12">
 																<input multiple="" type="file" id="id-input-file-3" />
 															</div>
 														</div>
-
 														<label>
 															<input type="checkbox" name="file-format" id="id-file-format" class="ace" />
 															<span class="lbl"> Allow only images</span>
@@ -1784,506 +1459,88 @@
 													</div>
 												</div>
 											</div>
+										
+										
 										</div>
-
 										<div class="col-sm-4">
-											<div class="widget-box">
+										<div class="widget-box">
 												<div class="widget-header">
-													<h4 class="widget-title">jQuery UI Sliders</h4>
-												</div>
+													<h4 class="widget-title">Publication Details</h4>
 
-												<div class="widget-body">
-													<div class="widget-main">
-														<div class="row">
-															<div class="col-xs-3 col-md-2">
-																<div id="slider-range"></div>
-															</div>
+<span class="widget-toolbar">
+    <a href="#" data-action="settings">
+        <i class="ace-icon fa fa-cog"></i>
+    </a>
+    <a href="#" data-action="reload">
+        <i class="ace-icon fa fa-refresh"></i>
+    </a>
+    <a href="#" data-action="collapse">
+        <i class="ace-icon fa fa-chevron-up"></i>
+    </a>
+    <a href="#" data-action="close">
+        <i class="ace-icon fa fa-times"></i>
+    </a>
+</span>
 
-															<div class="col-xs-9 col-md-10">
-																<div id="slider-eq">
-																	<span class="ui-slider-green ui-slider-small">77</span>
-																	<span class="ui-slider-red">55</span>
-																	<span class="ui-slider-purple" data-rel="tooltip" title="Disabled!">33</span>
-																	<span class="ui-slider-simple ui-slider-orange">40</span>
-																	<span class="ui-slider-simple ui-slider-dark">88</span>
-																</div>
-															</div>
+<div class="widget-body">
+    <div class="widget-main">
+        <div>
+            <label for="publication-date">Publication Date</label>
+            <div class="input-group">
+                <input class="form-control date-picker" value="<?php echo $row['pubdate']; ?>" id="publication-date" name="publicationdate" type="text" data-date-format="yyyy-mm-dd" />
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar bigger-110"></i>
+                </span>
+            </div>
+        </div>
+
+        <hr />
+
+        <div>
+            <label for="publication-year">Publication Year</label>
+            <input class="form-control" type="number" value="<?php echo $row['pubyear']; ?>" id="publication-year" name="pubyear" placeholder="Enter Publication Year" />
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-xs-6">
+                <label for="page-from">Page From</label>
+                <input class="form-control" type="number"  value="<?php echo $row['pagefrom']; ?>" id="page-from" name="pagefrom" placeholder="Enter Page From" />
+            </div>
+
+            <div class="col-xs-6">
+                <label for="page-to">Page To</label>
+                <input class="form-control" type="number"  value="<?php echo $row['pageto']; ?>"  id="page-to" name="pageto" placeholder="Enter Page To" />
+            </div>
+</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-
-										<div class="col-sm-4">
-											<div class="widget-box">
-												<div class="widget-header">
-													<h4 class="widget-title">Spinners</h4>
-												</div>
-
-												<div class="widget-body">
-													<div class="widget-main">
-														<input type="text" id="spinner1" />
-														<div class="space-6"></div>
-
-														<input type="text" class="input-sm" id="spinner2" />
-														<div class="space-6"></div>
-
-														<input type="text" id="spinner3" />
-														<div class="space-6"></div>
-
-														<input type="text" class="input-lg" id="spinner4" />
-													</div>
-												</div>
-											</div>
-										</div>
+</div>
+										
 									</div>
-
-									<hr />
-									<div class="row">
-										<div class="col-sm-4">
-											<div class="widget-box">
-												<div class="widget-header">
-													<h4 class="widget-title">Date Picker</h4>
-
-													<span class="widget-toolbar">
-														<a href="#" data-action="settings">
-															<i class="ace-icon fa fa-cog"></i>
-														</a>
-
-														<a href="#" data-action="reload">
-															<i class="ace-icon fa fa-refresh"></i>
-														</a>
-
-														<a href="#" data-action="collapse">
-															<i class="ace-icon fa fa-chevron-up"></i>
-														</a>
-
-														<a href="#" data-action="close">
-															<i class="ace-icon fa fa-times"></i>
-														</a>
-													</span>
-												</div>
-
-												<div class="widget-body">
-													<div class="widget-main">
-														<label for="id-date-picker-1">Date Picker</label>
-
-														<div class="row">
-															<div class="col-xs-8 col-sm-11">
-																<div class="input-group">
-																	<input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
-																	<span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
-																</div>
-															</div>
-														</div>
-
-														<div class="space space-8"></div>
-														<label>Range Picker</label>
-
-														<div class="row">
-															<div class="col-xs-8 col-sm-11">
-																<div class="input-daterange input-group">
-																	<input type="text" class="input-sm form-control" name="start" />
-																	<span class="input-group-addon">
-																		<i class="fa fa-exchange"></i>
-																	</span>
-
-																	<input type="text" class="input-sm form-control" name="end" />
-																</div>
-															</div>
-														</div>
-
-														<hr />
-														<label for="id-date-range-picker-1">Date Range Picker</label>
-
-														<div class="row">
-															<div class="col-xs-8 col-sm-11">
-																<div class="input-group">
-																	<span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
-
-																	<input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" />
-																</div>
-															</div>
-														</div>
-
-														<hr />
-														<label for="timepicker1">Time Picker</label>
-
-														<div class="input-group bootstrap-timepicker">
-															<input id="timepicker1" type="text" class="form-control" />
-															<span class="input-group-addon">
-																<i class="fa fa-clock-o bigger-110"></i>
-															</span>
-														</div>
-
-														<hr />
-														<label for="date-timepicker1">Date/Time Picker</label>
-
-														<div class="input-group">
-															<input id="date-timepicker1" type="text" class="form-control" />
-															<span class="input-group-addon">
-																<i class="fa fa-clock-o bigger-110"></i>
-															</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="col-sm-4">
-											<div class="widget-box">
-												<div class="widget-header">
-													<h4 class="widget-title">
-														<i class="ace-icon fa fa-tint"></i>
-														Color Picker
-													</h4>
-												</div>
-
-												<div class="widget-body">
-													<div class="widget-main">
-														<div class="clearfix">
-															<label for="colorpicker1">Color Picker</label>
-														</div>
-
-														<div class="control-group">
-															<div class="bootstrap-colorpicker">
-																<input id="colorpicker1" type="text" class="input-small" />
-															</div>
-														</div>
-
-														<hr />
-
-														<div>
-															<label for="simple-colorpicker-1">Custom Color Picker</label>
-
-															<select id="simple-colorpicker-1" class="hide">
-																<option value="#ac725e">#ac725e</option>
-																<option value="#d06b64">#d06b64</option>
-																<option value="#f83a22">#f83a22</option>
-																<option value="#fa573c">#fa573c</option>
-																<option value="#ff7537">#ff7537</option>
-																<option value="#ffad46" selected="">#ffad46</option>
-																<option value="#42d692">#42d692</option>
-																<option value="#16a765">#16a765</option>
-																<option value="#7bd148">#7bd148</option>
-																<option value="#b3dc6c">#b3dc6c</option>
-																<option value="#fbe983">#fbe983</option>
-																<option value="#fad165">#fad165</option>
-																<option value="#92e1c0">#92e1c0</option>
-																<option value="#9fe1e7">#9fe1e7</option>
-																<option value="#9fc6e7">#9fc6e7</option>
-																<option value="#4986e7">#4986e7</option>
-																<option value="#9a9cff">#9a9cff</option>
-																<option value="#b99aff">#b99aff</option>
-																<option value="#c2c2c2">#c2c2c2</option>
-																<option value="#cabdbf">#cabdbf</option>
-																<option value="#cca6ac">#cca6ac</option>
-																<option value="#f691b2">#f691b2</option>
-																<option value="#cd74e6">#cd74e6</option>
-																<option value="#a47ae2">#a47ae2</option>
-																<option value="#555">#555</option>
-															</select>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="col-sm-4">
-											<div class="widget-box">
-												<div class="widget-header">
-													<h4 class="widget-title">
-														<i class="ace-icon fa fa-tachometer"></i>
-														Knob Input
-													</h4>
-												</div>
-
-												<div class="widget-body">
-													<div class="widget-main">
-														<div class="control-group">
-															<div class="row">
-																<div class="col-xs-6 center">
-																	<div class="knob-container inline">
-																		<input type="text" class="input-small knob" value="15" data-min="0" data-max="100" data-step="10" data-width="80" data-height="80" data-thickness=".2" />
-																	</div>
-																</div>
-
-																<div class="col-xs-6  center">
-																	<div class="knob-container inline">
-																		<input type="text" class="input-small knob" value="41" data-min="0" data-max="100" data-width="80" data-height="80" data-thickness=".2" data-fgcolor="#87B87F" data-displayprevious="true" data-anglearc="250" data-angleoffset="-125" />
-																	</div>
-																</div>
-															</div>
-
-															<div class="row">
-																<div class="col-xs-12 center">
-																	<div class="knob-container inline">
-																		<input type="text" class="input-small knob" value="1" data-min="0" data-max="10" data-width="150" data-height="150" data-thickness=".2" data-fgcolor="#B8877F" data-angleoffset="90" data-cursor="true" />
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
+                                    
+									<div class="clearfix form-actions">
+									<div class="col-md-offset-4 col-md-8">
+                                        <button class="btn btn-info" type="submit" name="submit">
+                                           <i class="ace-icon fa fa-check bigger-110"></i>
+                                              Update
+                                        </button>
+                                       </div>
+									
+											
+									
 								</form>
 
-								<div class="hr hr-18 dotted hr-double"></div>
-
-								<h4 class="pink">
-									<i class="ace-icon fa fa-hand-o-right green"></i>
-									<a href="#modal-form" role="button" class="blue" data-toggle="modal"> Form Inside a Modal Box </a>
-								</h4>
-
-								<div class="hr hr-18 dotted hr-double"></div>
-								<h4 class="header green">Form Layouts</h4>
+								
 
 								<div class="row">
-									<div class="col-sm-5">
-										<div class="widget-box">
-											<div class="widget-header">
-												<h4 class="widget-title">Default</h4>
-											</div>
-
-											<div class="widget-body">
-												<div class="widget-main no-padding">
-													<form>
-														<!-- <legend>Form</legend> -->
-														<fieldset>
-															<label>Label name</label>
-
-															<input type="text" placeholder="Type something&hellip;" />
-															<span class="help-block">Example block-level help text here.</span>
-
-															<label class="pull-right">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"> check me out</span>
-															</label>
-														</fieldset>
-
-														<div class="form-actions center">
-															<button type="button" class="btn btn-sm btn-success">
-																Submit
-																<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
-															</button>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-sm-7">
-										<div class="widget-box">
-											<div class="widget-header">
-												<h4 class="widget-title">Inline Forms</h4>
-											</div>
-
-											<div class="widget-body">
-												<div class="widget-main">
-													<form class="form-inline">
-														<input type="text" class="input-small" placeholder="Username" />
-														<input type="password" class="input-small" placeholder="Password" />
-														<label class="inline">
-															<input type="checkbox" class="ace" />
-															<span class="lbl"> remember me</span>
-														</label>
-
-														<button type="button" class="btn btn-info btn-sm">
-															<i class="ace-icon fa fa-key bigger-110"></i>Login
-														</button>
-													</form>
-												</div>
-											</div>
-										</div>
-
-										<div class="space-6"></div>
-
-										<div class="widget-box">
-											<div class="widget-header widget-header-small">
-												<h5 class="widget-title lighter">Search Form</h5>
-											</div>
-
-											<div class="widget-body">
-												<div class="widget-main">
-													<form class="form-search">
-														<div class="row">
-															<div class="col-xs-12 col-sm-8">
-																<div class="input-group">
-																	<span class="input-group-addon">
-																		<i class="ace-icon fa fa-check"></i>
-																	</span>
-
-																	<input type="text" class="form-control search-query" placeholder="Type your query" />
-																	<span class="input-group-btn">
-																		<button type="button" class="btn btn-purple btn-sm">
-																			<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
-																			Search
-																		</button>
-																	</span>
-																</div>
-
-																<div class="hr"></div>
-
-																<div class="input-group input-group-lg">
-																	<span class="input-group-addon">
-																		<i class="ace-icon fa fa-check"></i>
-																	</span>
-
-																	<input type="text" class="form-control search-query" placeholder="Type your query" />
-																	<span class="input-group-btn">
-																		<button type="button" class="btn btn-default btn-lg">
-																			<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
-																			Search
-																		</button>
-																	</span>
-																</div>
-
-																<div class="hr"></div>
-
-																<div class="input-group">
-																	<span class="input-group-addon">
-																		<i class="ace-icon fa fa-check"></i>
-																	</span>
-
-																	<input type="text" class="form-control search-query" placeholder="Type your query" />
-																	<span class="input-group-btn">
-																		<button type="button" class="btn btn-inverse btn-white">
-																			<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
-																			Search
-																		</button>
-																	</span>
-																</div>
-															</div>
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-									</div>
+									
 								</div>
 
-								<div id="modal-form" class="modal" tabindex="-1">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h4 class="blue bigger">Please fill the following form fields</h4>
-											</div>
-
-											<div class="modal-body">
-												<div class="row">
-													<div class="col-xs-12 col-sm-5">
-														<div class="space"></div>
-
-														<input type="file" />
-													</div>
-
-													<div class="col-xs-12 col-sm-7">
-														<div class="form-group">
-															<label for="form-field-select-3">Location</label>
-
-															<div>
-																<select class="chosen-select" data-placeholder="Choose a Country...">
-																	<option value="">&nbsp;</option>
-																	<option value="AL">Alabama</option>
-																	<option value="AK">Alaska</option>
-																	<option value="AZ">Arizona</option>
-																	<option value="AR">Arkansas</option>
-																	<option value="CA">California</option>
-																	<option value="CO">Colorado</option>
-																	<option value="CT">Connecticut</option>
-																	<option value="DE">Delaware</option>
-																	<option value="FL">Florida</option>
-																	<option value="GA">Georgia</option>
-																	<option value="HI">Hawaii</option>
-																	<option value="ID">Idaho</option>
-																	<option value="IL">Illinois</option>
-																	<option value="IN">Indiana</option>
-																	<option value="IA">Iowa</option>
-																	<option value="KS">Kansas</option>
-																	<option value="KY">Kentucky</option>
-																	<option value="LA">Louisiana</option>
-																	<option value="ME">Maine</option>
-																	<option value="MD">Maryland</option>
-																	<option value="MA">Massachusetts</option>
-																	<option value="MI">Michigan</option>
-																	<option value="MN">Minnesota</option>
-																	<option value="MS">Mississippi</option>
-																	<option value="MO">Missouri</option>
-																	<option value="MT">Montana</option>
-																	<option value="NE">Nebraska</option>
-																	<option value="NV">Nevada</option>
-																	<option value="NH">New Hampshire</option>
-																	<option value="NJ">New Jersey</option>
-																	<option value="NM">New Mexico</option>
-																	<option value="NY">New York</option>
-																	<option value="NC">North Carolina</option>
-																	<option value="ND">North Dakota</option>
-																	<option value="OH">Ohio</option>
-																	<option value="OK">Oklahoma</option>
-																	<option value="OR">Oregon</option>
-																	<option value="PA">Pennsylvania</option>
-																	<option value="RI">Rhode Island</option>
-																	<option value="SC">South Carolina</option>
-																	<option value="SD">South Dakota</option>
-																	<option value="TN">Tennessee</option>
-																	<option value="TX">Texas</option>
-																	<option value="UT">Utah</option>
-																	<option value="VT">Vermont</option>
-																	<option value="VA">Virginia</option>
-																	<option value="WA">Washington</option>
-																	<option value="WV">West Virginia</option>
-																	<option value="WI">Wisconsin</option>
-																	<option value="WY">Wyoming</option>
-																</select>
-															</div>
-														</div>
-
-														<div class="space-4"></div>
-
-														<div class="form-group">
-															<label for="form-field-username">Username</label>
-
-															<div>
-																<input type="text" id="form-field-username" placeholder="Username" value="alexdoe" />
-															</div>
-														</div>
-
-														<div class="space-4"></div>
-
-														<div class="form-group">
-															<label for="form-field-first">Name</label>
-
-															<div>
-																<input type="text" id="form-field-first" placeholder="First Name" value="Alex" />
-																<input type="text" id="form-field-last" placeholder="Last Name" value="Doe" />
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="modal-footer">
-												<button class="btn btn-sm" data-dismiss="modal">
-													<i class="ace-icon fa fa-times"></i>
-													Cancel
-												</button>
-
-												<button class="btn btn-sm btn-primary">
-													<i class="ace-icon fa fa-check"></i>
-													Save
-												</button>
-											</div>
-										</div>
-									</div>
-								</div><!-- PAGE CONTENT ENDS -->
+								
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
@@ -2294,8 +1551,8 @@
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Ace</span>
-							Application &copy; 2013-2014
+							<span class="blue bolder">Amity</span>
+							University &copy; 2013-2014
 						</span>
 
 						&nbsp; &nbsp;

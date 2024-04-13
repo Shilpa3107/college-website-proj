@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+		.table-responsive {
+        max-height: 400px; /* Set max height for vertical scrolling */
+        overflow-x: auto; /* Enable horizontal scrolling */
+        border: 1px solid #ddd; /* Optional: Add border for visual clarity */
+    }
+    </style>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Default Responsive(mobile) Menu - Ace Admin</title>
+		<title>Research Papers by Faculty</title>
 
-		<meta name="description" content="" />
+		<meta name="description" content="Static &amp; Dynamic Tables" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
@@ -413,7 +436,7 @@
 						<b class="arrow"></b>
 					</li>
 
-					<li class="active open">
+					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-desktop"></i>
 							<span class="menu-text">
@@ -426,7 +449,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="active open">
+							<li class="">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-caret-right"></i>
 
@@ -464,7 +487,7 @@
 										<b class="arrow"></b>
 									</li>
 
-									<li class="active">
+									<li class="">
 										<a href="mobile-menu-1.html">
 											<i class="menu-icon fa fa-caret-right"></i>
 											Default Mobile Menu
@@ -611,7 +634,7 @@
 						</ul>
 					</li>
 
-					<li class="">
+					<li class="active open">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> View Reports </span>
@@ -623,18 +646,35 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="tables.html">
+								<a href="Reochapters.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Simple &amp; Dynamic
+									Chapters Reports
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="active">
+								<a href="Reopapers.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Papers in Conference Report
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="jqgrid.html">
+								<a href="ReoResearchpaper.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									jqGrid plugin
+									Research Paper Reports
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+                            <li class="">
+								<a href="ReoBooks.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Books Published
 								</a>
 
 								<b class="arrow"></b>
@@ -681,9 +721,9 @@
 							</li>
 
 							<li class="">
-								<a href="wysiwyg.html">
+								<a href="books.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wysiwyg &amp; Markdown
+									Books Published
 								</a>
 
 								<b class="arrow"></b>
@@ -898,13 +938,9 @@
 							</li>
 
 							<li>
-								<a href="#">UI &amp; Elements</a>
+								<a href="#">Tables</a>
 							</li>
-
-							<li>
-								<a href="#">Layouts</a>
-							</li>
-							<li class="active">Default Mobile Menu</li>
+							<li class="active">Papers in Conference</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -916,125 +952,87 @@
 							</form>
 						</div><!-- /.nav-search -->
 					</div>
+<div class="table-responsive ">
+	<?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "scholarsphere";
 
-					<div class="page-content">
-						<div class="ace-settings-container" id="ace-settings-container">
-							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-								<i class="ace-icon fa fa-cog bigger-130"></i>
-							</div>
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $database);
 
-							<div class="ace-settings-box clearfix" id="ace-settings-box">
-								<div class="pull-left width-50">
-									<div class="ace-settings-item">
-										<div class="pull-left">
-											<select id="skin-colorpicker" class="hide">
-												<option data-skin="no-skin" value="#438EB9">#438EB9</option>
-												<option data-skin="skin-1" value="#222A2D">#222A2D</option>
-												<option data-skin="skin-2" value="#C6487E">#C6487E</option>
-												<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-											</select>
-										</div>
-										<span>&nbsp; Choose Skin</span>
-									</div>
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
-										<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-									</div>
+    // SQL query to fetch data from the table
+    $sql = "SELECT * FROM papersbyfaculty";
+    $result = $conn->query($sql);
 
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
-										<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-									</div>
+    if ($result->num_rows > 0) {
+        // Output data in a table format
+        echo '<table id="papersTable">';
+        echo '<thead><tr><th>Operation</th><th>ID</th><th>University</th><th>Department</th><th>Faculty/Scientist</th><th>Employee ID</th><th>Author/s</th><th>Co-author</th><th>Paper Title</th><th>Journal</th><th>Conference</th><th>Conference Paper</th><th>Region</th><th>Publication Date</th><th>Publication Year</th><th>Volume</th><th>Page From</th><th>Page To</th><th>Listed in Scopus</th><th>Listed In</th><th>Listed in Web of Science</th><th>Peer Reviewed</th><th>ISSN</th><th>ISBN</th><th>Publisher</th><th>Institutional affiliation</th><th>Co-Author</th><th>Citation Index</th><th>Number of Citation</th><th>Evidence</th><th>Any Info</th><th>Reference</th></tr></thead>';
+        echo '<tbody>';
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>';
+			echo '<td><a href="editReopapers.php?id=' . $row['user_id'] . '">Edit</a></td>';
+            echo '<td>' . $row['user_id'] . '</td>';
+            echo '<td>' . $row['University'] . '</td>';
+            echo '<td>' . $row['Department'] . '</td>';
+            echo '<td>' . $row['Faculty'] . '</td>';
+            echo '<td>' . $row['Employee ID'] . '</td>';
+            echo '<td>' . $row['other Author'] . '</td>';
+            echo '<td>' . $row['Co-author'] . '</td>';
+            echo '<td>' . $row['booktitle'] . '</td>';
+            echo '<td>' . $row['journalname'] . '</td>';
+            echo '<td>' . $row['conferenceName'] . '</td>';
+            echo '<td>' . $row['conferencePaper'] . '</td>';
+            echo '<td>' . $row['region'] . '</td>';
+            echo '<td>' . $row['pubdate'] . '</td>';
+            echo '<td>' . $row['pubyear'] . '</td>';
+            echo '<td>' . $row['volume'] . '</td>';
+            echo '<td>' . $row['pagefrom'] . '</td>';
+            echo '<td>' . $row['pageto'] . '</td>';
+            // echo '<td>' . $row['impact'] . '</td>';
+            echo '<td>' . $row['scopus'] . '</td>';
+            echo '<td>' . $row['listedin'] . '</td>';
+            echo '<td>' . $row['wos'] . '</td>';
+            echo '<td>' . $row['peer'] . '</td>';
+            echo '<td>' . $row['issn'] . '</td>';
+            echo '<td>' . $row['isbn'] . '</td>';
+            echo '<td>' . $row['pubname'] . '</td>';
+            echo '<td>' . $row['affltn'] . '</td>';
+            echo '<td>' . $row['corrauthor'] . '</td>';
+            echo '<td>' . $row['citind'] . '</td>';
+            echo '<td>' . $row['nocit'] . '</td>';
+            // echo '<td>' . $row['link'] . '</td>';
+            echo '<td>' . $row['evdupload'] . '</td>';
+            echo '<td>' . $row['othrinfo'] . '</td>';
+            echo '<td>' . $row['ref'] . '</td>';
 
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
-										<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-									</div>
+            echo '</tr>';
+        }
+        echo '</tbody>';
+        echo '</table>';
+    } else {
+        echo "No results found";
+    }
 
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
-										<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-									</div>
+    // Close the database connection
+    $conn->close();
+?>
+</div>
+<script>
+    $(document).ready(function() {
+        // Make the table interactive with DataTables plugin
+        $('#papersTable').DataTable();
+    });
+</script>
 
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
-										<label class="lbl" for="ace-settings-add-container">
-											Inside
-											<b>.container</b>
-										</label>
-									</div>
-								</div><!-- /.pull-left -->
 
-								<div class="pull-left width-50">
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
-										<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
-									</div>
-
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
-										<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
-									</div>
-
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
-										<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
-									</div>
-								</div><!-- /.pull-left -->
-							</div><!-- /.ace-settings-box -->
-						</div><!-- /.ace-settings-container -->
-
-						<div class="page-header">
-							<h1>Default Responsive(mobile) Menu </h1>
-						</div><!-- /.page-header -->
-
-						<div class="row">
-							<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
-								<div class="alert alert-info hidden-sm hidden-xs">
-									<button type="button" class="close" data-dismiss="alert">
-										<i class="ace-icon fa fa-times"></i>
-									</button>
-									Please note that
-									<span class="blue bolder">mobile menu</span>
-									is visible only when window size is less than
-									<span class="blue bolder">992px</span>
-									,which you can change using CSS builder tool.
-								</div>
-
-								<div class="alert alert-info hidden-md hidden-lg">
-									<button type="button" class="close" data-dismiss="alert">
-										<i class="ace-icon fa fa-times"></i>
-									</button>
-									When device is smaller than
-									<span class="blue bolder">992px</span>
-									wide, side menu is hidden and will be visible by clicking on the toggle button.
-								</div>
-
-								<div class="hidden-md hidden-lg">
-									<a href="#" class="btn btn-primary btn-white btn-bold" id="id-change-style">
-										<i class="ace-icon fa fa-exchange"></i>
-										Show older Ace toggle button
-									</a>
-
-									<div class="space-4"></div>
-
-									<div>
-										<label>
-											Push Content :
-											<input type="checkbox" class="ace ace-switch ace-switch-6" id="id-push-content" />
-											<span class="lbl middle"></span>
-										</label>
-									</div>
-
-									<div class="hr hr-16"></div>
-								</div>
-
-								<!-- PAGE CONTENT ENDS -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->
 
@@ -1085,6 +1083,14 @@
 		<script src="assets/js/bootstrap.min.js"></script>
 
 		<!-- page specific plugin scripts -->
+		<script src="assets/js/jquery.dataTables.min.js"></script>
+		<script src="assets/js/jquery.dataTables.bootstrap.min.js"></script>
+		<script src="assets/js/dataTables.buttons.min.js"></script>
+		<script src="assets/js/buttons.flash.min.js"></script>
+		<script src="assets/js/buttons.html5.min.js"></script>
+		<script src="assets/js/buttons.print.min.js"></script>
+		<script src="assets/js/buttons.colVis.min.js"></script>
+		<script src="assets/js/dataTables.select.min.js"></script>
 
 		<!-- ace scripts -->
 		<script src="assets/js/ace-elements.min.js"></script>
@@ -1093,55 +1099,237 @@
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 			jQuery(function($) {
-				$('#id-change-style').on(ace.click_event, function() {
-					var toggler = $('#menu-toggler');
-					var fixed = toggler.hasClass('fixed');
-					var display = toggler.hasClass('display');
+				//initiate dataTables plugin
+				var myTable = 
+				$('#dynamic-table')
+				//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+				.DataTable( {
+					bAutoWidth: false,
+					"aoColumns": [
+					  { "bSortable": false },
+					  null, null,null, null, null,
+					  { "bSortable": false }
+					],
+					"aaSorting": [],
 					
-					if(toggler.closest('.navbar').length == 1) {
-						$('#menu-toggler').remove();
-						toggler = $('#sidebar').before('<a id="menu-toggler" data-target="#sidebar" class="menu-toggler" href="#">\
-							<span class="sr-only">Toggle sidebar</span>\
-							<span class="toggler-text"></span>\
-						 </a>').prev();
+					
+					//"bProcessing": true,
+			        //"bServerSide": true,
+			        //"sAjaxSource": "http://127.0.0.1/table.php"	,
 			
-						 var ace_sidebar = $('#sidebar').ace_sidebar('ref');
-						 ace_sidebar.set('mobile_style', 2);
+					//,
+					//"sScrollY": "200px",
+					//"bPaginate": false,
 			
-						 var icon = $(this).children().detach();
-						 $(this).text('Hide older Ace toggle button').prepend(icon);
-						 
-						 $('#id-push-content').closest('div').hide();
-						 $('#id-push-content').removeAttr('checked');
-						 $('.sidebar').removeClass('push_away');
-					 } else {
-						$('#menu-toggler').remove();
-						toggler = $('.navbar-brand').before('<button data-target="#sidebar" id="menu-toggler" class="three-bars pull-left menu-toggler navbar-toggle" type="button">\
-							<span class="sr-only">Toggle sidebar</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>\
-						</button>').prev();
-						
-						 var ace_sidebar = $('#sidebar').ace_sidebar('ref');
-						 ace_sidebar.set('mobile_style', 1);
-						
-						var icon = $(this).children().detach();
-						$(this).text('Show older Ace toggle button').prepend(icon);
-						
-						$('#id-push-content').closest('div').show();
-					 }
+					//"sScrollX": "100%",
+					//"sScrollXInner": "120%",
+					//"bScrollCollapse": true,
+					//Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+					//you may want to wrap the table inside a "div.dataTables_borderWrap" element
 			
-					 if(fixed) toggler.addClass('fixed');
-					 if(display) toggler.addClass('display');
-					 
-					 $('.sidebar[data-sidebar-hover=true]').ace_sidebar_hover('reset');
-					 $('.sidebar[data-sidebar-scroll=true]').ace_sidebar_scroll('reset');
+					//"iDisplayLength": 50
 			
-					 return false;
+			
+					select: {
+						style: 'multi'
+					}
+			    } );
+			
+				
+				
+				$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+				
+				new $.fn.dataTable.Buttons( myTable, {
+					buttons: [
+					  {
+						"extend": "colvis",
+						"text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+						"className": "btn btn-white btn-primary btn-bold",
+						columns: ':not(:first):not(:last)'
+					  },
+					  {
+						"extend": "copy",
+						"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+						"className": "btn btn-white btn-primary btn-bold"
+					  },
+					  {
+						"extend": "csv",
+						"text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+						"className": "btn btn-white btn-primary btn-bold"
+					  },
+					  {
+						"extend": "excel",
+						"text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+						"className": "btn btn-white btn-primary btn-bold"
+					  },
+					  {
+						"extend": "pdf",
+						"text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+						"className": "btn btn-white btn-primary btn-bold"
+					  },
+					  {
+						"extend": "print",
+						"text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+						"className": "btn btn-white btn-primary btn-bold",
+						autoPrint: false,
+						message: 'This print was produced using the Print button for DataTables'
+					  }		  
+					]
+				} );
+				myTable.buttons().container().appendTo( $('.tableTools-container') );
+				
+				//style the message box
+				var defaultCopyAction = myTable.button(1).action();
+				myTable.button(1).action(function (e, dt, button, config) {
+					defaultCopyAction(e, dt, button, config);
+					$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
 				});
 				
-				$('#id-push-content').removeAttr('checked').on('click', function() {
-					$('.sidebar').toggleClass('push_away');
+				
+				var defaultColvisAction = myTable.button(0).action();
+				myTable.button(0).action(function (e, dt, button, config) {
+					
+					defaultColvisAction(e, dt, button, config);
+					
+					
+					if($('.dt-button-collection > .dropdown-menu').length == 0) {
+						$('.dt-button-collection')
+						.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+						.find('a').attr('href', '#').wrap("<li />")
+					}
+					$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
 				});
-			});
+			
+				////
+			
+				setTimeout(function() {
+					$($('.tableTools-container')).find('a.dt-button').each(function() {
+						var div = $(this).find(' > div').first();
+						if(div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
+						else $(this).tooltip({container: 'body', title: $(this).text()});
+					});
+				}, 500);
+				
+				
+				
+				
+				
+				myTable.on( 'select', function ( e, dt, type, index ) {
+					if ( type === 'row' ) {
+						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+					}
+				} );
+				myTable.on( 'deselect', function ( e, dt, type, index ) {
+					if ( type === 'row' ) {
+						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
+					}
+				} );
+			
+			
+			
+			
+				/////////////////////////////////
+				//table checkboxes
+				$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+				
+				//select/deselect all rows according to table header checkbox
+				$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function(){
+					var th_checked = this.checked;//checkbox inside "TH" table header
+					
+					$('#dynamic-table').find('tbody > tr').each(function(){
+						var row = this;
+						if(th_checked) myTable.row(row).select();
+						else  myTable.row(row).deselect();
+					});
+				});
+				
+				//select/deselect a row when the checkbox is checked/unchecked
+				$('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
+					var row = $(this).closest('tr').get(0);
+					if(this.checked) myTable.row(row).deselect();
+					else myTable.row(row).select();
+				});
+			
+			
+			
+				$(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					e.preventDefault();
+				});
+				
+				
+				
+				//And for the first simple table, which doesn't have TableTools or dataTables
+				//select/deselect all rows according to table header checkbox
+				var active_class = 'active';
+				$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+					var th_checked = this.checked;//checkbox inside "TH" table header
+					
+					$(this).closest('table').find('tbody > tr').each(function(){
+						var row = this;
+						if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+						else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+					});
+				});
+				
+				//select/deselect a row when the checkbox is checked/unchecked
+				$('#simple-table').on('click', 'td input[type=checkbox]' , function(){
+					var $row = $(this).closest('tr');
+					if($row.is('.detail-row ')) return;
+					if(this.checked) $row.addClass(active_class);
+					else $row.removeClass(active_class);
+				});
+			
+				
+			
+				/********************************/
+				//add tooltip for small view action buttons in dropdown menu
+				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+				
+				//tooltip placement on right or left
+				function tooltip_placement(context, source) {
+					var $source = $(source);
+					var $parent = $source.closest('table')
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $source.offset();
+					//var w2 = $source.width();
+			
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+					return 'left';
+				}
+				
+				
+				
+				
+				/***************/
+				$('.show-details-btn').on('click', function(e) {
+					e.preventDefault();
+					$(this).closest('tr').next().toggleClass('open');
+					$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+				});
+				/***************/
+				
+				
+				
+				
+				
+				/**
+				//add horizontal scrollbars to a simple table
+				$('#simple-table').css({'width':'2000px', 'max-width': 'none'}).wrap('<div style="width: 1000px;" />').parent().ace_scroll(
+				  {
+					horizontal: true,
+					styleClass: 'scroll-top scroll-dark scroll-visible',//show the scrollbars on top(default is bottom)
+					size: 2000,
+					mouseWheelLock: true
+				  }
+				).css('padding-top', '12px');
+				*/
+			
+			
+			})
 		</script>
 	</body>
 </html>

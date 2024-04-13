@@ -502,26 +502,47 @@
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
-							<span class="menu-text"> Tables </span>
+							<span class="menu-text"> View Reports </span>
 
 							<b class="arrow fa fa-angle-down"></b>						</a>
 
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
-								<a href="tables.html">
+						<li class="">
+								<a href="Reochapters.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Simple &amp; Dynamic								</a>
+									Chapters Reports
+								</a>
 
-								<b class="arrow"></b>							</li>
+								<b class="arrow"></b>
+							</li>
 
 							<li class="">
-								<a href="jqgrid.html">
+								<a href="Reopapers.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									jqGrid plugin								</a>
+									Papers in Conference Report
+								</a>
 
-								<b class="arrow"></b>							</li>
+								<b class="arrow"></b>
+							</li>
+
+							<li class="active">
+								<a href="ReoResearchpaper.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Research Paper Reports
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="ReoBooks.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Books Published
+								</a>
+
+								<b class="arrow"></b>
+							</li>
 						</ul>
 					</li>
 
