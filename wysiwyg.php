@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Papers - Amity University</title>
+		<title>Books Published - Amity University</title>
 
 		<meta name="description" content="Common form elements and layouts" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -59,16 +59,12 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
     $author = $_POST['author_name'];
     $coauthor = $_POST['corresponding_coauthor_name'];
     $booktitle = $_POST['paper_title'];
-    $journalname = $_POST['journal_name'];
-    $article = isset($_POST['article']) ? $_POST['article'] : '';
-	$conference = isset($_POST['conference']) ? $_POST['conference'] : '';
     $National = isset($_POST['National']) ? $_POST['National'] : '';
     $publicationdate = isset($_POST['publicationdate']) ? $_POST['publicationdate'] : '';
     $pubyear = isset($_POST['pubyear']) ? $_POST['pubyear'] : '';
     $edition = isset($_POST['edition']) ? $_POST['edition'] : '';
     $pagefrom = isset($_POST['pagefrom']) ? $_POST['pagefrom'] : '';
     $pageto = isset($_POST['pageto']) ? $_POST['pageto'] : '';
-    $impact = isset($_POST['impact']) ? $_POST['impact'] : '';
     $scopus = isset($_POST['scopus']) ? $_POST['scopus'] : '';
     $listedin = isset($_POST['listedin']) ? $_POST['listedin'] : '';
     $wos = isset($_POST['wos']) ? $_POST['wos'] : '';
@@ -117,7 +113,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         die("The connection to DB wasn't established ".mysqli_connect_error($conn));
     }
 
-	$sql="INSERT INTO `papersbyfaculty` (`University`, `Department`, `Faculty`, `Employee ID`, `other Author`, `Co-author`, `booktitle`,`journalname`,`conferenceName`, `conferencePaper`,`region`, `pubdate`, `pubyear`, `volume`, `pagefrom`, `pageto`, `scopus`, `listedin`, `wos`, `peer`, `issn`, `isbn`, `pubname`, `affltn`, `corrauthor`, `citind`, `nocit`, `evdupload`, `othrinfo`, `ref`) VALUES ('$uni', '$department', '$faculty', '$empid', '$author', '$coauthor', '$booktitle','$journalname','$article','$conference', '$National', '$publicationdate', '$pubyear', '$edition', '$pagefrom', '$pageto', '$scopus', '$listedin', '$wos', '$peer','$issn', '$isbn', '$pubname', '$affltn', '$corrauthor', '$citind', '$nocit', '$destination', '$othrinfo', '$ref')";
+	$sql="INSERT INTO `booksbyfaculty`(`University`, `Department`, `Faculty`, `Employee ID`, `other Author`, `Co-author`, `booktitle`, `region`, `pubdate`, `pubyear`, `volume`, `pagefrom`, `pageto`, `scopus`, `listedin`, `wos`, `peer`, `issn`, `isbn`, `pubname`, `affltn`, `corrauthor`, `citind`, `nocit`, `evdupload`, `othrinfo`, `ref`) VALUES ('$uni', '$department', '$faculty', '$empid', '$author', '$coauthor', '$booktitle','$National', '$publicationdate', '$pubyear', '$edition', '$pagefrom', '$pageto', '$scopus', '$listedin', '$wos', '$peer','$issn', '$isbn', '$pubname', '$affltn', '$corrauthor', '$citind', '$nocit', '$destination', '$othrinfo', '$ref')";
 
     
     $result=mysqli_query($conn,$sql);
@@ -986,7 +982,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 							<li>
 								<a href="#">Forms</a>
 							</li>
-							<li class="active">Paper</li>
+							<li class="active">Books</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -1069,7 +1065,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 
 						<div class="page-header">
 							<h1>
-								Paper
+								Books
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
 									Common form elements and layouts
@@ -1080,7 +1076,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<form class="form-horizontal" role="form" method="post" action="form-wizard.php" enctype="multipart/form-data">
+								<form class="form-horizontal" role="form" method="post" action="wysiwyg.php" enctype="multipart/form-data">
 								<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
 										<div class="col-sm-9">
@@ -1133,22 +1129,12 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 									</div>
 									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right"> Title of Paper </label>
+										<label class="col-sm-3 control-label no-padding-right"> Title of Book </label>
 										<div class="col-sm-9">
 											<input type="text" name="paper_title" placeholder="Enter Title of Paper" class="input-sm" />
 											<div class="space-2"></div>
 										</div>
 									</div>
-									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right"> Name of Journal </label>
-										<div class="col-sm-9">
-											<input type="text" name="journal_name" placeholder="Enter Name of Journal" class="input-sm" />
-											<div class="space-2"></div>
-										</div>
-									</div>
-									
-									
 									
 									<div class="hr hr-24"></div>
 									
@@ -1156,7 +1142,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 										<div class="col-xs-12 col-sm-4">
 											<div class="widget-box">
 												<div class="widget-header">
-													<h4 class="widget-title">Paper/Article Submission</h4>
+													<h4 class="widget-title">Book Submission</h4>
 													<div class="widget-toolbar">
 														<a href="#" data-action="collapse">
 															<i class="ace-icon fa fa-chevron-up"></i>
@@ -1168,17 +1154,6 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												</div>
 												<div class="widget-body">
 													<div class="widget-main">
-														<div>
-															<label for="research-paper">Name of conference</label>
-															<textarea class="form-control" name="article" id="research-paper" placeholder="Enter Research Paper/Article"></textarea>
-														</div>
-													
-														<hr />
-														<div>
-															<label for="research-paper">Conference Paper</label>
-															<textarea class="form-control" name="conference" id="research-paper" placeholder="Enter Research Paper/Article"></textarea>
-														</div>
-														<hr />
 														<div>
 															<label for="publisher">Name of Publisher</label>
 															<input type="text" name ="pubname" class="form-control" id="publisher" placeholder="Enter Name of Publisher">
@@ -1252,11 +1227,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 															<label for="num-citations">Number of Citations</label>
 															<input class="form-control" name = "nocit" type="number" id="num-citations" placeholder="Enter Number of Citations" />
 														</div>
-														<hr />
-														<div>
-															<label for="impact-factor">Impact Factor</label>
-															<input class="form-control" name="impact" type="text" id="impact-factor" placeholder="Enter Impact Factor" />
-														</div>
+													
 														
 													
 													</div>

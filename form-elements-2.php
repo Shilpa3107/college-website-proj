@@ -757,16 +757,16 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 							<li class="">
 								<a href="form-wizard.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wizard &amp; Validation
+									Papers in Conference Proceeding
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="wysiwyg.html">
+								<a href="wysiwyg.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wysiwyg &amp; Markdown
+									Books Published
 								</a>
 
 								<b class="arrow"></b>
