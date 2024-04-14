@@ -1368,13 +1368,13 @@ $conn->close();
 												<label class="control-label bolder blue" name="peer">Peer Reviewed</label>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" <?php if($row['peer'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="y" />
+														<input name="peer" <?php if($row['peer'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="y" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" <?php if($row['peer'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="n" />
+														<input name="peer" <?php if($row['peer'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1387,13 +1387,13 @@ $conn->close();
 												<label class="control-label bolder blue" name="wos">Listed in Web of Science (Thomas Reuters) (Clarivate Analytics)</label>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" <?php if($row['wos'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="y" />
+														<input name="wos" <?php if($row['wos'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="y" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" <?php if($row['wos'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="n" />
+														<input name="wos" <?php if($row['wos'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>

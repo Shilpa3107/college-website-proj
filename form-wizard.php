@@ -58,10 +58,10 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
     $empid = $_POST['employee_id'];
     $author = $_POST['author_name'];
     $coauthor = $_POST['corresponding_coauthor_name'];
-    $booktitle = $_POST['paper_title'];
+    $booktitle = $_POST['booktitle'];
     $journalname = $_POST['journal_name'];
-    $article = isset($_POST['article']) ? $_POST['article'] : '';
-	$conference = isset($_POST['conference']) ? $_POST['conference'] : '';
+    $conferenceName = isset($_POST['conferenceName']) ? $_POST['conferenceName'] : '';
+	$conferencePaper = isset($_POST['conferencePaper']) ? $_POST['conferencePaper'] : '';
     $National = isset($_POST['National']) ? $_POST['National'] : '';
     $publicationdate = isset($_POST['publicationdate']) ? $_POST['publicationdate'] : '';
     $pubyear = isset($_POST['pubyear']) ? $_POST['pubyear'] : '';
@@ -117,7 +117,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         die("The connection to DB wasn't established ".mysqli_connect_error($conn));
     }
 
-	$sql="INSERT INTO `papersbyfaculty` (`University`, `Department`, `Faculty`, `Employee ID`, `other Author`, `Co-author`, `booktitle`,`journalname`,`conferenceName`, `conferencePaper`,`region`, `pubdate`, `pubyear`, `volume`, `pagefrom`, `pageto`, `scopus`, `listedin`, `wos`, `peer`, `issn`, `isbn`, `pubname`, `affltn`, `corrauthor`, `citind`, `nocit`, `evdupload`, `othrinfo`, `ref`) VALUES ('$uni', '$department', '$faculty', '$empid', '$author', '$coauthor', '$booktitle','$journalname','$article','$conference', '$National', '$publicationdate', '$pubyear', '$edition', '$pagefrom', '$pageto', '$scopus', '$listedin', '$wos', '$peer','$issn', '$isbn', '$pubname', '$affltn', '$corrauthor', '$citind', '$nocit', '$destination', '$othrinfo', '$ref')";
+	$sql="INSERT INTO `papersbyfaculty` (`University`, `Department`, `Faculty`, `Employee ID`, `other Author`, `Co-author`, `booktitle`,`journalname`,`conferenceName`, `conferencePaper`,`region`, `pubdate`, `pubyear`, `ref`, `pagefrom`, `pageto`, `scopus`, `listedin`, `wos`, `peer`, `issn`, `isbn`, `pubname`, `affltn`, `corrauthor`, `citind`, `nocit`, `evdupload`, `othrinfo`, `ref`) VALUES ('$uni', '$department', '$faculty', '$empid', '$author', '$coauthor', '$booktitle','$journalname','$article','$conference', '$National', '$publicationdate', '$pubyear', '$edition', '$pagefrom', '$pageto', '$scopus', '$listedin', '$wos', '$peer','$issn', '$isbn', '$pubname', '$affltn', '$corrauthor', '$citind', '$nocit', '$destination', '$othrinfo', '$ref')";
 
     
     $result=mysqli_query($conn,$sql);
@@ -1341,13 +1341,13 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												<label class="control-label bolder blue" name="peer">Peer Reviewed</label>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" type="radio" class="ace" value="yes" />
+														<input name="peer" type="radio" class="ace" value="y" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" type="radio" class="ace" value="no" />
+														<input name="peer" type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1360,13 +1360,13 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												<label class="control-label bolder blue" name="wos">Listed in Web of Science (Thomas Reuters) (Clarivate Analytics)</label>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" type="radio" class="ace" value="yes" />
+														<input name="wos" type="radio" class="ace" value="y" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" type="radio" class="ace" value="no" />
+														<input name="wos" type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1380,13 +1380,13 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												<label class="control-label bolder blue" name="scopus">Listed in Scopus</label>
 												<div class="radio inline">
 													<label>
-														<input name="scopus" type="radio" class="ace" value="yes" />
+														<input name="scopus" type="radio" class="ace" value="y" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="scopus" type="radio" class="ace" value="no" />
+														<input name="scopus" type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>

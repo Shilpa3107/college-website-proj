@@ -1094,7 +1094,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<form class="form-horizontal" role="form" method="post" action="form-elements.php" enctype="multipart/form-data">
+								<form class="form-horizontal" role="form" method="post" action="form-elements2.php" enctype="multipart/form-data">
 								<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
 										<div class="col-sm-9">
@@ -1335,13 +1335,13 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												<label class="control-label bolder blue" name="peer">Peer Reviewed</label>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" type="radio" class="ace" value="yes" />
+														<input name="peer" type="radio" class="ace" value="y" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" type="radio" class="ace" value="no" />
+														<input name="peer" type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1354,13 +1354,13 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												<label class="control-label bolder blue" name="wos">Listed in Web of Science (Thomas Reuters) (Clarivate Analytics)</label>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" type="radio" class="ace" value="yes" />
+														<input name="wos" type="radio" class="ace" value="y" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" type="radio" class="ace" value="no" />
+														<input name="wos" type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1374,13 +1374,13 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 												<label class="control-label bolder blue" name="scopus">Listed in Scopus</label>
 												<div class="radio inline">
 													<label>
-														<input name="scopus" type="radio" class="ace" value="yes" />
+														<input name="scopus" type="radio" class="ace" value="y />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="scopus" type="radio" class="ace" value="no" />
+														<input name="scopus" type="radio" class="ace" value="n" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>

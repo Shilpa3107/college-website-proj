@@ -65,16 +65,17 @@ if (!$conn) {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the updated data from the form
-    $id = $_POST['id'];
+    $id = $_POST['user_id'];
     $university = $_POST['university'];
     $department = $_POST['department'];
     $faculty = $_POST['faculty'];
     $emp_id = $_POST['emp_id'];
     $otherauthor = $_POST['otherauthor'];
-    $co_author = $_POST['co-author'];
+    $coauthor = $_POST['coauthor'];
     $booktitle = $_POST['booktitle'];
     $journalname=$_POST['journalname'];
-	$article=$_POST['article'];
+	$conferenceName=$_POST['conferenceName'];
+	$conferencePaper=$_POST['conferencePaper'];
 	$National=$_POST['National'];
     $region = $_POST['National'];
     $publicationdate = $_POST['publicationdate'];
@@ -122,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ref=$_POST['ref'];
 
     // SQL to update data in the database
-    $sql = "UPDATE papersbyfaculty SET University='$university', Department='$department', Faculty='$faculty', `Employee ID`='$emp_id', `Author`='$author', `Co-author`='$co_author', papertitle='$booktitle',journalname='$journalname',article='$article', region='$National', pubdate='$publicationdate', pubyear='$pubyear', volume='$edition', pagefrom='$pagefrom', pageto='$pageto', scopus='$scopus', listedin='$listedin', wos='$wos', peer='$peer', issn='$issn', isbn='$isbn', pubname='$pubname', affltn='$affltn', corrauthor='$corrauthor', citind='$citind', nocit='$nocit',link='$link',evdupload='$destination', othrinfo='$othrinfo', ref='$ref' WHERE user_id='$id'";
+    $sql = "UPDATE papersbyfaculty SET University='$university', Department='$department', Faculty='$faculty', `Employee ID`='$emp_id', `other Author`='$otherauthor', `Co-author`='$coauthor', booktitle='$booktitle',journalname='$journalname', region='$National',conferenceName='$conferenceName',conferencePaper='$conferencePaper', pubdate='$publicationdate', pubyear='$pubyear', volume='$edition', pagefrom='$pagefrom', pageto='$pageto', scopus='$scopus', listedin='$listedin', wos='$wos', peer='$peer', issn='$issn', isbn='$isbn', pubname='$pubname', affltn='$affltn', corrauthor='$corrauthor', citind='$citind', nocit='$nocit',evdupload='$destination', othrinfo='$othrinfo', ref='$ref' WHERE user_id='$id'";
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to success page
@@ -1160,24 +1161,25 @@ $conn->close();
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<form class="form-horizontal" role="form" method="post" action="editReopapers.php" enctype="multipart/form-data">
+								<input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
 								<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" name="university" placeholder="Enter University Name" class="col-xs-10 col-sm-5" />
+											<input type="text" id="form-field-1" name="university" value="<?php echo $row['University']; ?>" placeholder="Enter University Name" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Department </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1-1" name="department" placeholder="Enter Department Name" class="form-control" />
+											<input type="text" id="form-field-1-1" name="department" value="<?php echo $row['Department']; ?>" placeholder="Enter Department Name" class="form-control" />
 										</div>
 									</div>
 									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Faculty/Scientist </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-2" name="faculty_scientist" placeholder="Enter Faculty/Scientist Name" class="col-xs-10 col-sm-5" />
+											<input type="text" id="form-field-2" name="faculty" value="<?php echo $row['Faculty']; ?>" placeholder="Enter Faculty/Scientist Name" class="col-xs-10 col-sm-5" />
 											<span class="help-inline col-xs-12 col-sm-7">
 												<!-- <span class="middle">Inline help text</span> -->
 											</span>
@@ -1187,14 +1189,14 @@ $conn->close();
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-3"> Employee ID </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-3" name="employee_id" placeholder="Enter Employee ID" class="col-xs-5 col-sm-3" />
+											<input type="text" id="form-field-3" name="emp_id" value="<?php echo $row['Employee ID']; ?>" placeholder="Enter Employee ID" class="col-xs-5 col-sm-3" />
 											<span class="help-inline col-xs-7 col-sm-9"></span>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-4"> Author's Name </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-4" name="author_name" placeholder="Enter Author's Name" class="input-sm" />
+											<input type="text" id="form-field-4" name="otherauthor" value="<?php echo $row['other Author']; ?>" placeholder="Enter Author's Name" class="input-sm" />
 											<div class="space-2"></div>
 											<div class="help-block" id="input-size-slider"></div>
 										</div>
@@ -1204,7 +1206,7 @@ $conn->close();
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-5"> Corresponding/Co-author's Name </label>
 										<div class="col-sm-9">
 											<div class="clearfix">
-												<input type="text" id="form-field-5" name="corresponding_coauthor_name" placeholder="Enter Corresponding/Co-author's Name" class="col-xs-1" />
+												<input type="text" id="form-field-5" name="coauthor" value="<?php echo $row['Co-author']; ?>" placeholder="Enter Corresponding/Co-author's Name" class="col-xs-1" />
 											</div>
 											<div class="space-2"></div>
 											<div class="help-block" id="input-span-slider"></div>
@@ -1214,7 +1216,7 @@ $conn->close();
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right"> Title of Paper </label>
 										<div class="col-sm-9">
-											<input type="text" name="paper_title" placeholder="Enter Title of Paper" class="input-sm" />
+											<input type="text" name="booktitle" value="<?php echo $row['booktitle']; ?>" placeholder="Enter Title of Paper" class="input-sm" />
 											<div class="space-2"></div>
 										</div>
 									</div>
@@ -1222,7 +1224,7 @@ $conn->close();
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right"> Name of Journal </label>
 										<div class="col-sm-9">
-											<input type="text" name="journal_name" placeholder="Enter Name of Journal" class="input-sm" />
+											<input type="text" name="journalname" value="<?php echo $row['journalname']; ?>" placeholder="Enter Name of Journal" class="input-sm" />
 											<div class="space-2"></div>
 										</div>
 									</div>
@@ -1249,38 +1251,38 @@ $conn->close();
 													<div class="widget-main">
 														<div>
 															<label for="research-paper">Name of conference</label>
-															<textarea class="form-control" name="article" id="research-paper" placeholder="Enter Research Paper/Article"></textarea>
+															<textarea class="form-control" name="conferenceName" id="research-paper" value="<?php echo $row['conferenceName']; ?>" placeholder="Enter Research Paper/Article"></textarea>
 														</div>
 													
 														<hr />
 														<div>
 															<label for="research-paper">Conference Paper</label>
-															<textarea class="form-control" name="conference" id="research-paper" placeholder="Enter Research Paper/Article"></textarea>
+															<textarea class="form-control" name="conferencePaper" id="research-paper" value="<?php echo $row['conferencePaper']; ?>" placeholder="Enter Research Paper/Article"></textarea>
 														</div>
 														<hr />
 														<div>
 															<label for="publisher">Name of Publisher</label>
-															<input type="text" name ="pubname" class="form-control" id="publisher" placeholder="Enter Name of Publisher">
+															<input type="text" name ="pubname" class="form-control" id="publisher" value="<?php echo $row['pubname']; ?>" placeholder="Enter Name of Publisher">
 														</div>
 														<hr />
 														<div>
 															<label for="institutional-affiliations">Institutional Affiliations</label>
-															<input type="text" name="affltn" class="form-control" id="institutional-affiliations" placeholder="Enter Institutional Affiliations">
+															<input type="text" name="affltn" class="form-control" id="institutional-affiliations" value="<?php echo $row['affltn']; ?>" placeholder="Enter Institutional Affiliations">
 														</div>
 														<hr />
 														<div>
 															<label for="corresponding-author">Corresponding Author</label>
-															<input type="text" name="corrauthor" class="form-control" id="corresponding-author" placeholder="Enter Corresponding Author">
+															<input type="text" name="corrauthor" class="form-control" id="corresponding-author" value="<?php echo $row['corrauthor']; ?>" placeholder="Enter Corresponding Author">
 														</div>
 														<hr />
 														<div>
 															<label for="additional-info">Any Other Information</label>
-															<textarea class="form-control" name="othrinfo" id="additional-info" placeholder="Enter Any Other Information"></textarea>
+															<textarea class="form-control" name="othrinfo" id="additional-info" value="<?php echo $row['othrinfo']; ?>" placeholder="Enter Any Other Information"></textarea>
 														</div>
 														<hr />
 														<div>
 															<label for="reference">Reference</label>
-															<textarea class="form-control" name="ref" id="reference" placeholder="Enter Reference"></textarea>
+															<textarea class="form-control" name="ref" id="reference" value="<?php echo $row['ref']; ?>" placeholder="Enter Reference"></textarea>
 														</div>
 													</div>
 												</div>
@@ -1309,32 +1311,32 @@ $conn->close();
 													<div class="widget-main">
 														<div>
 															<label for="volume-edition">Volume/Edition</label>
-															<input class="form-control" name="edition" type="number" id="volume-edition" placeholder="Enter Volume/Edition" />
+															<input class="form-control" name="edition" type="number" id="volume-edition" value="<?php echo $row['ref']; ?>" placeholder="Enter Volume/Edition" />
 														</div>
 														<hr />
 														<div>
 															<label for="issn">ISSN</label>
-															<input class="form-control" name="issn" type="text" id="issn" placeholder="Enter ISSN" />
+															<input class="form-control" name="issn" type="text" id="issn" value="<?php echo $row['issn']; ?>" placeholder="Enter ISSN" />
 														</div>
 														<hr />
 														<div>
 															<label for="isbn">ISBN</label>
-															<input class="form-control" name="isbn" type="text" id="isbn" placeholder="Enter ISBN" />
+															<input class="form-control" name="isbn" type="text" id="isbn" value="<?php echo $row['isbn']; ?>" placeholder="Enter ISBN" />
 														</div>
 														<hr />
 														<div>
 															<label for="citation-index">Citation Index</label>
-															<input class="form-control" name="citind" type="number" id="citation-index" placeholder="Enter Citation Index" />
+															<input class="form-control" name="citind" type="number" id="citation-index" value="<?php echo $row['University']; ?>" placeholder="Enter Citation Index" />
 														</div>
 														<hr />
 														<div>
 															<label for="num-citations">Number of Citations</label>
-															<input class="form-control" name = "nocit" type="number" id="num-citations" placeholder="Enter Number of Citations" />
+															<input class="form-control" name = "nocit" type="number" id="num-citations" value="<?php echo $row['nocit']; ?>" placeholder="Enter Number of Citations" />
 														</div>
 														<hr />
 														<div>
 															<label for="impact-factor">Impact Factor</label>
-															<input class="form-control" name="impact" type="text" id="impact-factor" placeholder="Enter Impact Factor" />
+															<input class="form-control" name="impact" type="text" id="impact-factor"  placeholder="Enter Impact Factor" />
 														</div>
 														
 													
@@ -1367,8 +1369,8 @@ $conn->close();
 															<label for="region">Region</label>
 															<select class="form-control" id="region" name="National" >
 																<option value=""></option>
-																<option value="national">National</option>
-																<option value="international">International</option>
+																<option value="National" <?php if($row['region'] == 'National') echo 'selected'; ?>>National</option>
+                                                                <option value="International" <?php if($row['region'] == 'International') echo 'selected'; ?>>International</option>
 															</select>
 														</div>
 														<hr />
@@ -1376,10 +1378,10 @@ $conn->close();
 															<label for="listing">Listing</label>
 															<select class="form-control" id="listing" name="listedin">
 																<option value=""></option>
-																<option value="ugc">UGC</option>
-																<option value="pubmed">PubMed</option>
-																<option value="ici">ICI</option>
-																<option value="others">Others</option>
+																<option <?php if($row['listedin'] == 'UGC') echo 'selected'; ?>>UGC</option>
+																<option <?php if($row['listedin'] == 'PubMed') echo 'selected'; ?>>PubMed</option>
+																<option <?php if($row['listedin'] == 'ICI') echo 'selected'; ?>>ICI</option>
+																<option <?php if($row['listedin'] == 'Others') echo 'selected'; ?>>Others</option>
 															</select>
 														</div>
 													</div>
@@ -1403,13 +1405,13 @@ $conn->close();
 												<label class="control-label bolder blue" name="peer">Peer Reviewed</label>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" type="radio" class="ace" value="yes" />
+														<input name="peer" <?php if($row['peer'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="yes" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="peer-reviewed" type="radio" class="ace" value="no" />
+														<input name="peer" <?php if($row['peer'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="no" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1422,13 +1424,13 @@ $conn->close();
 												<label class="control-label bolder blue" name="wos">Listed in Web of Science (Thomas Reuters) (Clarivate Analytics)</label>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" type="radio" class="ace" value="yes" />
+														<input name="wos"  <?php if($row['wos'] == 'y') echo 'checked'; ?> type="radio" class="ace" value="yes" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="web-of-science" type="radio" class="ace" value="no" />
+														<input name="wos"  <?php if($row['wos'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="no" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1442,13 +1444,13 @@ $conn->close();
 												<label class="control-label bolder blue" name="scopus">Listed in Scopus</label>
 												<div class="radio inline">
 													<label>
-														<input name="scopus" type="radio" class="ace" value="yes" />
+														<input name="scopus" <?php if($row['scopus'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="yes" />
 														<span class="lbl"> Yes</span>
 													</label>
 												</div>
 												<div class="radio inline">
 													<label>
-														<input name="scopus" type="radio" class="ace" value="no" />
+														<input name="scopus" <?php if($row['scopus'] == 'n') echo 'checked'; ?> type="radio" class="ace" value="no" />
 														<span class="lbl"> No</span>
 													</label>
 												</div>
@@ -1618,7 +1620,7 @@ $conn->close();
         <div>
             <label for="publication-date">Publication Date</label>
             <div class="input-group">
-                <input class="form-control date-picker" id="publication-date" name="publicationdate" type="text" data-date-format="yyyy-mm-dd" />
+                <input class="form-control date-picker" value="<?php echo $row['pubdate']; ?>" id="publication-date" name="publicationdate" type="text" data-date-format="yyyy-mm-dd" />
                 <span class="input-group-addon">
                     <i class="fa fa-calendar bigger-110"></i>
                 </span>
@@ -1629,7 +1631,7 @@ $conn->close();
 
         <div>
             <label for="publication-year">Publication Year</label>
-            <input class="form-control" type="number" id="publication-year" name="pubyear" placeholder="Enter Publication Year" />
+            <input class="form-control" type="number" id="publication-year" name="pubyear" value="<?php echo $row['pubyear']; ?>" placeholder="Enter Publication Year" />
         </div>
 
         <hr />
@@ -1637,12 +1639,12 @@ $conn->close();
         <div class="row">
             <div class="col-xs-6">
                 <label for="page-from">Page From</label>
-                <input class="form-control" type="number" id="page-from" name="pagefrom" placeholder="Enter Page From" />
+                <input class="form-control" type="number" id="page-from" name="pagefrom" value="<?php echo $row['pagefrom']; ?>" placeholder="Enter Page From" />
             </div>
 
             <div class="col-xs-6">
                 <label for="page-to">Page To</label>
-                <input class="form-control" type="number" id="page-to" name="pageto" placeholder="Enter Page To" />
+                <input class="form-control" type="number" id="page-to" name="pageto" value="<?php echo $row['pageto']; ?>" placeholder="Enter Page To" />
             </div>
 </div>
 														</div>
