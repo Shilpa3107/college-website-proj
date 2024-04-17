@@ -578,9 +578,9 @@
 								<b class="arrow"></b>							</li>
 
 							<li class="">
-								<a href="wysiwyg.html">
+								<a href="wysiwyg.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wysiwyg &amp; Markdown								</a>
+									Books Published							</a>
 
 								<b class="arrow"></b>							</li>
 
@@ -796,7 +796,7 @@
 
 											<div class="stat stat-success">8%</div>
 										</div>
-
+										
 										<div class="infobox infobox-blue">
 											<div class="infobox-icon">
 												<i class="ace-icon fa fa-twitter"></i>											</div>
@@ -894,8 +894,8 @@
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Ace</span>
-							Application &copy; 2013-2014						</span>
+							<span class="blue bolder">Amity</span>
+							University&copy; 2013-2014						</span>
 
 						&nbsp; &nbsp;
 						<span class="action-buttons">
