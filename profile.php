@@ -1056,7 +1056,7 @@ session_start();
 														<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
 															<i class="ace-icon fa fa-circle light-green"></i>
 															&nbsp;
-															<span class="white">Alex M. Doe</span>
+															<span class="white"><?php echo $_SESSION['username']	?></span>
 														</a>
 
 														<ul class="align-left dropdown-menu dropdown-caret dropdown-lighter">
@@ -2956,8 +2956,8 @@ session_start();
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Ace</span>
-							Application &copy; 2013-2014
+							<span class="blue bolder">Amity</span>
+							University &copy; 2013-2014
 						</span>
 
 						&nbsp; &nbsp;
