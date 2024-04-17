@@ -35,6 +35,9 @@
 		<![endif]-->
 	</head>
 	<?php
+// Start the session
+session_start();
+
 // Database connection parameters
 $host = 'localhost'; // Change this to your database host
 $username = 'root'; // Change this to your database username
@@ -57,6 +60,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $university = $_POST['university'];
     $department = $_POST['department'];
     $emp_id = $_POST['employee_id'];
+	$_SESSION['university'] = $university;
+	$_SESSION['department'] = $department;
+	$_SESSION['emp_id'] = $emp_id;
+	$_SESSION['email'] = $email;
+	
     
     // Insert user data into the database
     $sql = "INSERT INTO registerinfo (email, username, password, university, department, emp_id) VALUES ('$email', '$username', '$password', '$university', '$department', '$emp_id')";
@@ -74,15 +82,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     // Validate user credentials
     $username = $_POST['username'];
     $password = $_POST['password'];
-    
     $sql = "SELECT * FROM registerinfo WHERE username='$username' AND password='$password'";
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
+        // Fetch user data
+        $row = $result->fetch_assoc();
+        $university = $row['university'];
+        $department = $row['department'];
+		$emp_id = $row['emp_id'];
+		$email = $row['email'];
+        
         // Start the session (if not already started)
         session_start();
-        // Store the username in the session for later use
+        
+        // Store the username, university, department, email, and emp_id in the session for later use
         $_SESSION['username'] = $username;
+        $_SESSION['university'] = $university;
+        $_SESSION['department'] = $department;
+		$_SESSION['emp_id'] = $emp_id;
+		$_SESSION['email'] = $email;
+
+        
         // Redirect to index1.php
         header("Location: index1.php");
         exit(); // Ensure that no further code is executed after the redirect
@@ -131,6 +152,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['forgot_password'])) {
 // Close connection
 $conn->close();
 ?>
+
+
+
 
 	<body class="login-layout">
 		<div class="main-container">

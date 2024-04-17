@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -332,7 +335,7 @@
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<?php echo $_SESSION['username']	?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -686,9 +689,9 @@
 							</li>
 
 							<li class="">
-								<a href="wysiwyg.html">
+								<a href="books.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Wysiwyg &amp; Markdown
+									Books Published
 								</a>
 
 								<b class="arrow"></b>
@@ -1103,7 +1106,7 @@
 
 													<a href="#" class="btn btn-link">
 														<i class="ace-icon fa fa-globe bigger-125 blue"></i>
-														www.alexdoe.com
+														<?php echo $_SESSION['email'] ?>
 													</a>
 												</div>
 
@@ -1197,33 +1200,32 @@
 													<div class="profile-info-name"> Username </div>
 
 													<div class="profile-info-value">
-														<span class="editable" id="username">alexdoe</span>
+														<span class="editable" id="username"><?php echo $_SESSION['username']?></span>
 													</div>
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> Location </div>
+													<div class="profile-info-name"> University </div>
 
 													<div class="profile-info-value">
 														<i class="fa fa-map-marker light-orange bigger-110"></i>
-														<span class="editable" id="country">Netherlands</span>
-														<span class="editable" id="city">Amsterdam</span>
+														<span class="editable" id="country"><?php echo $_SESSION['university']?></span>
 													</div>
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> Age </div>
+													<div class="profile-info-name"> Department </div>
 
 													<div class="profile-info-value">
-														<span class="editable" id="age">38</span>
+														<span class="editable" id="age"><?php echo $_SESSION['department']?></span>
 													</div>
 												</div>
 
 												<div class="profile-info-row">
-													<div class="profile-info-name"> Joined </div>
+													<div class="profile-info-name"> Employee ID </div>
 
 													<div class="profile-info-value">
-														<span class="editable" id="signup">2010/06/20</span>
+														<span class="editable" id="signup"><?php echo $_SESSION['emp_id']?></span>
 													</div>
 												</div>
 

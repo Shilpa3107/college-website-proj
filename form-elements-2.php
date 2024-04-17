@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -52,10 +55,10 @@
     <?php
 // Submit the following to the database
 if($_SERVER['REQUEST_METHOD']=='POST') {
-    $uni = $_POST['university'];
-    $department = $_POST['department'];
-    $faculty = $_POST['faculty_scientist'];
-    $empid = $_POST['employee_id'];
+    $uni =  $_SESSION['university'];
+    $department = $_SESSION['department'];
+    $faculty = $_SESSION['username'];
+    $empid = $_SESSION['emp_id'];
     $author = $_POST['author_name'];
     $coauthor = $_POST['corresponding_coauthor_name'];
     $booktitle = $_POST['paper_title'];
@@ -410,7 +413,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<?php echo $_SESSION['username']	?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -1096,42 +1099,26 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 								<!-- PAGE CONTENT BEGINS -->
 								<form class="form-horizontal" role="form" method="post" action="form-elements2.php" enctype="multipart/form-data">
 								<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
-										<div class="col-sm-9">
-											<input type="text" id="form-field-1" name="university" placeholder="Enter University Name" class="col-xs-10 col-sm-5" />
-										</div>
-									</div>
+    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> University </label>
+    <div class="col-sm-9">
+        <input type="text" id="form-field-1" name="university" placeholder="Enter University Name" class="col-xs-10 col-sm-5" value="<?php echo $_SESSION['university']?>"/>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Department </label>
+    <div class="col-sm-9">
+        <input type="text" id="form-field-1-1" name="department" placeholder="Enter Department Name" class="form-control" value="<?php echo $_SESSION['department']?>" />
+    </div>
+</div>
 									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Department </label>
-										<div class="col-sm-9">
-											<input type="text" id="form-field-1-1" name="department" placeholder="Enter Department Name" class="form-control" />
-										</div>
-									</div>
 									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Faculty/Scientist </label>
-										<div class="col-sm-9">
-											<input type="text" id="form-field-2" name="faculty_scientist" placeholder="Enter Faculty/Scientist Name" class="col-xs-10 col-sm-5" />
-											<span class="help-inline col-xs-12 col-sm-7">
-												<!-- <span class="middle">Inline help text</span> -->
-											</span>
-										</div>
-									</div>
 									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-3"> Employee ID </label>
-										<div class="col-sm-9">
-											<input type="text" id="form-field-3" name="employee_id" placeholder="Enter Employee ID" class="col-xs-5 col-sm-3" />
-											<span class="help-inline col-xs-7 col-sm-9"></span>
-										</div>
-									</div>
-									<div class="form-group">
+									
+<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-4"> Author's Name </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-4" name="author_name" placeholder="Enter Author's Name" class="input-sm" />
-											<div class="space-2"></div>
-											<div class="help-block" id="input-size-slider"></div>
+											<input type="text" id="form-field-4" name="author_name" placeholder="Enter Author's Name" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									
@@ -1139,10 +1126,8 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-5"> Corresponding/Co-author's Name </label>
 										<div class="col-sm-9">
 											<div class="clearfix">
-												<input type="text" id="form-field-5" name="corresponding_coauthor_name" placeholder="Enter Corresponding/Co-author's Name" class="col-xs-1" />
+												<input type="text" id="form-field-5" name="corresponding_coauthor_name" placeholder="Enter Corresponding/Co-author's Name" class="col-xs-10 col-sm-5" />
 											</div>
-											<div class="space-2"></div>
-											<div class="help-block" id="input-span-slider"></div>
 										</div>
 									</div>
 									

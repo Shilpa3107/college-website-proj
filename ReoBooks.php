@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -350,7 +353,7 @@
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<?php echo $_SESSION['username']	?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -966,9 +969,9 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
+	$emp_id = $_SESSION['emp_id'];
     // SQL query to fetch data from the table
-    $sql = "SELECT * FROM booksbyfaculty";
+    $sql = "SELECT * FROM booksbyfaculty WHERE `Employee ID` = '$emp_id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {

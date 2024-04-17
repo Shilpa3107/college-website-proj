@@ -1,3 +1,12 @@
+<?php
+session_start();
+// echo "Welcome ".$_SESSION['username'];
+// echo "<br> University ".$_SESSION['university'];
+// echo "<br> Department ".$_SESSION['department'];
+// echo "<br> Email ".$_SESSION['email'];
+// echo "<br> Emp ID ".$_SESSION['emp_id'];
+// echo "<br>";
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -266,8 +275,8 @@
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
-									<small>Welcome,</small>
-									Jason								</span>
+									<small>Welcome, </small>
+									<?php echo $_SESSION['username']	?>		</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>							</a>
 
@@ -278,7 +287,7 @@
 										Settings									</a>								</li>
 
 								<li>
-									<a href="profile.html">
+									<a href="profile.php">
 										<i class="ace-icon fa fa-user"></i>
 										Profile									</a>								</li>
 
@@ -630,7 +639,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="profile.html">
+								<a href="profile.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									User Profile								</a>
 
