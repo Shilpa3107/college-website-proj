@@ -85,7 +85,8 @@ session_start();
 				<div class="navbar-header pull-left">
 					<a href="index1.php" class="navbar-brand">
 						<small>
-							<i class="fa fa-leaf"></i>
+							<i class=""></i>
+							<img src= "amity_logo.png" alt="amity-logo" width="30" height="30">
 							Amity University
 						</small>
 					</a>
