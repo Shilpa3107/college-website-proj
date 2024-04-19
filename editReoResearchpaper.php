@@ -875,7 +875,7 @@ $conn->close();
 												<div class="widget-body">
 													<div class="widget-main">
 														<div>
-															<label for="research-paper">Research Paper/Article</label>
+															<label for="research-paper">Research Paper/Article or anything which you would like to mention</label>
 															<textarea class="form-control" name="article" id="research-paper" value="<?php echo $row['article']; ?>" placeholder="Enter Research Paper/Article"></textarea>
 														</div>
 														<hr />

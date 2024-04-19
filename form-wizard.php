@@ -59,7 +59,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
     $department = $_SESSION['department'];
     $faculty = $_SESSION['username'];
     $empid = $_SESSION['emp_id'];
-    $author = $_POST['author_name'];
+    $author = $_SESSION['username'];
     $coauthor = $_POST['corresponding_coauthor_name'];
     $booktitle = $_POST['booktitle'];
     $journalname = $_POST['journal_name'];
@@ -599,14 +599,7 @@ ini_set('display_errors', 1);
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
-								<a href="dropzone.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Dropzone File Upload
-								</a>
-
-								<b class="arrow"></b>
-							</li>
+							
 						</ul>
 					</li>
 
@@ -745,8 +738,8 @@ ini_set('display_errors', 1);
 <div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-4"> Author's Name </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-4" name="author_name" placeholder="Enter Author's Name" class="col-xs-10 col-sm-5" />
-										</div>
+										<input type="text" id="form-field-1-1" name="author_name" placeholder="Enter Author's Name" class="form-control" value="<?php echo $_SESSION['username']?>" />
+                                        </div>
 									</div>
 									
 									<div class="form-group">
