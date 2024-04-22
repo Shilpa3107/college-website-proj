@@ -480,7 +480,7 @@ $conn->close();
 								<img class="nav-user-photo" src="assets/images/avatars/user.png" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									<?php echo $_SESSION['username']	?>
+									<?php if(isset($_SESSION['user_name']) ) { echo $_SESSION['user_name']; } else{echo "Please login ";} ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -1757,24 +1757,11 @@ $conn->close();
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Amity</span>
-							University &copy; 2013-2014
+							<span class="">Amity</span>
+							University
 						</span>
 
-						&nbsp; &nbsp;
-						<span class="action-buttons">
-							<a href="#">
-								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-							</a>
-
-							<a href="#">
-								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-							</a>
-
-							<a href="#">
-								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-							</a>
-						</span>
+						
 					</div>
 				</div>
 			</div>

@@ -57,9 +57,9 @@ session_start();
 if($_SERVER['REQUEST_METHOD']=='POST') {
     $uni =  $_SESSION['university'];
     $department = $_SESSION['department'];
-    $faculty = $_SESSION['username'];
+    $faculty = $_SESSION['user_name'];
     $empid = $_SESSION['emp_id'];
-    $author = $_SESSION['username'];
+    $author = $_SESSION['user_name'];
     $coauthor = $_POST['corresponding_coauthor_name'];
     $booktitle = $_POST['paper_title'];
     $journalname = $_POST['journal_name'];
@@ -416,7 +416,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 								<img class="nav-user-photo" src="assets/images/avatars/user.png" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									<?php echo $_SESSION['username']	?>
+									<?php if(isset($_SESSION['user_name']) ) { echo $_SESSION['user_name']; } else{echo "Please login ";} ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -737,7 +737,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 <div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-4"> Author's Name </label>
 										<div class="col-sm-9">
-										<input type="text" id="form-field-1-1" name="author_name" placeholder="Enter Author's Name" class="form-control" value="<?php echo $_SESSION['username']?>" />
+										<input type="text" id="form-field-1-1" name="author_name" placeholder="Enter Author's Name" class="form-control" value="<?php echo $_SESSION['user_name']?>" />
                                         </div>
 									</div>
 									
@@ -1675,24 +1675,11 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Amity</span>
-							University &copy; 2013-2014
+							<span class="">Amity</span>
+							University 
 						</span>
 
-						&nbsp; &nbsp;
-						<span class="action-buttons">
-							<a href="#">
-								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-							</a>
-
-							<a href="#">
-								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-							</a>
-
-							<a href="#">
-								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-							</a>
-						</span>
+						
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+ //echo "Profile ".$_SESSION['avatar_file'];
 // echo "Welcome ".$_SESSION['username'];
 // echo "<br> University ".$_SESSION['university'];
 // echo "<br> Department ".$_SESSION['department'];
@@ -77,7 +79,7 @@ session_start();
 
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="assets/images/avatars/user.png" alt="user's Photo" />
+								<img class="nav-user-photo" src="./upload/<?php echo $_SESSION['avatar_file']?>" alt="user's Photo" width="50" height="50" />
 								<span class="user-info">
 									<small>Welcome, </small>
 									<?php if(isset($_SESSION['user_name']) ) { echo $_SESSION['user_name']; } else{echo "Please login ";} ?>		</span>
@@ -401,23 +403,18 @@ session_start();
 				</div>
 			</div><!-- /.main-content -->
 
+
+
+
+
 			<div class="footer">
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Amity</span>
-							University&copy; 2013-2014						</span>
+							<span class="">Amity</span>
+							University						</span>
 
-						&nbsp; &nbsp;
-						<span class="action-buttons">
-							<a href="#">
-								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>							</a>
-
-							<a href="#">
-								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>							</a>
-
-							<a href="#">
-								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>							</a>						</span>					</div>
+											</span>					</div>
 				</div>
 			</div>
 

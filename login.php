@@ -126,6 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
         $department = $row['department'];
 		$employee_id = $row['emp_id'];
 		$email = $row['email'];
+		$avatar_file = $ow['avatar_file'];
         
         // Start the session (if not already started)
         session_start();
@@ -136,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
         $_SESSION['department'] = $department;
 		$_SESSION['employee_id'] = $employee_id;
 		$_SESSION['email'] = $email;
+		$_SESSION['avatar_file'] = $avatar_file;
 
         
         // Redirect to index1.php
