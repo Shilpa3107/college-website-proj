@@ -55,7 +55,7 @@ if ($conn->connect_error) {
 // Handle user registration
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $email = $_POST['email'];
-    $username = $_POST['username'];
+    $user_name = $_POST['user_name'];
     $password = $_POST['password'];
     $university = $_POST['university'];
     $department = $_POST['department'];
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
 	
     
     // Insert user data into the database
-    $sql = "INSERT INTO registerinfo (email, username, password, university, department, emp_id) VALUES ('$email', '$username', '$password', '$university', '$department', '$emp_id')";
+    $sql = "INSERT INTO registerinfo (emp_id,email, user_name, password, university, department) VALUES ('$emp_id','$email', '$username', '$password', '$university', '$department')";
     
     if ($conn->query($sql) === TRUE) {
         echo "Registration successful";
@@ -80,27 +80,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
 // Handle user login
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     // Validate user credentials
-    $username = $_POST['username'];
+    $employee_id = $_POST['employee_id'];
     $password = $_POST['password'];
-    $sql = "SELECT * FROM registerinfo WHERE username='$username' AND password='$password'";
+    $sql = "SELECT * FROM registerinfo WHERE emp_id='$employee_id' AND password='$password'";
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
         // Fetch user data
         $row = $result->fetch_assoc();
+		$user_name = $row['user_name'];
         $university = $row['university'];
         $department = $row['department'];
-		$emp_id = $row['emp_id'];
+		$employee_id = $row['emp_id'];
 		$email = $row['email'];
         
         // Start the session (if not already started)
         session_start();
         
         // Store the username, university, department, email, and emp_id in the session for later use
-        $_SESSION['username'] = $username;
+        $_SESSION['user_name'] = $user_name;
         $_SESSION['university'] = $university;
         $_SESSION['department'] = $department;
-		$_SESSION['emp_id'] = $emp_id;
+		$_SESSION['employee_id'] = $employee_id;
 		$_SESSION['email'] = $email;
 
         
@@ -164,11 +165,8 @@ $conn->close();
 						<div class="login-container">
 							<div class="center">
 								<h1>
-									<i class="ace-icon fa fa-leaf green"></i>
-									<span class="red">Amity</span>
-									<span class="white" id="id-text2">University</span>
+									<span class="white">Amity University</span>
 								</h1>
-								<h4 class="blue" id="id-company-text">&copy; Research Information</h4>
 							</div>
 
 							<div class="space-6"></div>
@@ -178,68 +176,46 @@ $conn->close();
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
-												<i class="ace-icon fa fa-coffee green"></i>
 												Please Enter Your Information
 											</h4>
 
 											<div class="space-6"></div>
 
 											<form method="post" action="">
-    <fieldset>
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="text" class="form-control" name="username" placeholder="Username" />
-                <i class="ace-icon fa fa-user"></i>
-            </span>
-        </label>
+									<fieldset>
+										<label class="block clearfix">
+											<span class="block input-icon input-icon-right">
+												<input type="text" class="form-control" name="employee_id" placeholder="Employee ID" />
+												<i class="ace-icon fa fa-user"></i>
+											</span>
+										</label>
 
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="password" class="form-control" name="password" placeholder="Password" />
-                <i class="ace-icon fa fa-lock"></i>
-            </span>
-        </label>
+										<label class="block clearfix">
+											<span class="block input-icon input-icon-right">
+												<input type="password" class="form-control" name="password" placeholder="Password" />
+												<i class="ace-icon fa fa-lock"></i>
+											</span>
+										</label>
 
-        <div class="space"></div>
+										<div class="space"></div>
 
-        <div class="clearfix">
-            <label class="inline">
-                <input type="checkbox" class="ace" />
-                <span class="lbl"> Remember Me</span>
-            </label>
+										<div class="clearfix">
+											<label class="inline">
+												<input type="checkbox" class="ace" />
+												<span class="lbl"> Remember Me</span>
+											</label>
 
-            <button type="submit" name="login" class="width-35 pull-right btn btn-sm btn-primary">
-                <i class="ace-icon fa fa-key"></i>
-                <span class="bigger-110">Login</span>
-            </button>
-        </div>
+											<button type="submit" name="login" class="width-35 pull-right btn btn-sm btn-primary">
+												<i class="ace-icon fa fa-key"></i>
+												<span class="bigger-110">Login</span>
+											</button>
+										</div>
 
-        <div class="space-4"></div>
-    </fieldset>
-</form>
-
-
-											<div class="social-or-login center">
-												<span class="bigger-110">Or Login Using</span>
-											</div>
-
-											<div class="space-6"></div>
-
-											<div class="social-login center">
-												<a class="btn btn-primary">
-													<i class="ace-icon fa fa-facebook"></i>
-												</a>
-
-												<a class="btn btn-info">
-													<i class="ace-icon fa fa-twitter"></i>
-												</a>
-
-												<a class="btn btn-danger">
-													<i class="ace-icon fa fa-google-plus"></i>
-												</a>
-											</div>
-										</div><!-- /.widget-main -->
-
+										<div class="space-4"></div>
+									</fieldset>
+								</form>
+								<div>
+									<div>
 										<div class="toolbar clearfix">
 											<div>
 												<a href="#" data-target="#forgot-box" class="forgot-password-link">
@@ -322,7 +298,7 @@ $conn->close();
 
         <label class="block clearfix">
             <span class="block input-icon input-icon-right">
-                <input type="text" class="form-control" name="username" placeholder="Name" />
+                <input type="text" class="form-control" name="user_name" placeholder="Name" />
                 <i class="ace-icon fa fa-user"></i>
             </span>
         </label>
