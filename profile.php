@@ -82,7 +82,7 @@ session_start();
 								<img class="nav-user-photo" src="assets/images/avatars/user.png" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									<?php echo $_SESSION['username']	?>
+									<?php echo $_SESSION['user_name']	?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -428,7 +428,7 @@ session_start();
 														<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
 															<i class="ace-icon fa fa-circle light-green"></i>
 															&nbsp;
-															<span class="white"><?php echo $_SESSION['username']?></span>
+															<span class="white"><?php echo $_SESSION['user_name']?></span>
 														</a>
 
 														<ul class="align-left dropdown-menu dropdown-caret dropdown-lighter">
@@ -512,7 +512,7 @@ session_start();
 													<div class="profile-info-name"> Username </div>
 
 													<div class="profile-info-value">
-														<span class="editable" id="username"><?php if(isset($_SESSION['username']) ) { echo $_SESSION['username']; } else{echo "Please login ";} ?></span>
+														<span class="editable" id="username"><?php if(isset($_SESSION['user_name']) ) { echo $_SESSION['user_name']; } else{echo "Please login ";} ?></span>
 													</div>
 												</div>
 
@@ -537,7 +537,7 @@ session_start();
 													<div class="profile-info-name"> Employee ID </div>
 
 													<div class="profile-info-value">
-														<span class="editable" id="signup"><?php echo $_SESSION['emp_id']?></span>
+														<span class="editable" id="signup"><?php echo $_SESSION['employee_id']?></span>
 													</div>
 												</div>
 
@@ -593,16 +593,6 @@ session_start();
 															</span>
 
 															<div class="space space-4"></div>
-
-															<a href="#" class="btn btn-sm btn-block btn-success">
-																<i class="ace-icon fa fa-plus-circle bigger-120"></i>
-																<span class="bigger-110">Add as a friend</span>
-															</a>
-
-															<a href="#" class="btn btn-sm btn-block btn-primary">
-																<i class="ace-icon fa fa-envelope-o bigger-110"></i>
-																<span class="bigger-110">Send a message</span>
-															</a>
 														</div><!-- /.col -->
 
 														<div class="col-xs-12 col-sm-9">
