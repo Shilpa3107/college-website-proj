@@ -80,7 +80,7 @@ session_start();
 								<img class="nav-user-photo" src="assets/images/avatars/user.png" alt="user's Photo" />
 								<span class="user-info">
 									<small>Welcome, </small>
-									<?php if(isset($_SESSION['username']) ) { echo $_SESSION['username']; } else{echo "Please login ";} ?>		</span>
+									<?php if(isset($_SESSION['user_name']) ) { echo $_SESSION['user_name']; } else{echo "Please login ";} ?>		</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>							</a>
 
