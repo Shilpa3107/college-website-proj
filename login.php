@@ -35,49 +35,82 @@
 		<![endif]-->
 	</head>
 	<?php
-// Start the session
-session_start();
+    session_start();
 
-// Database connection parameters
-$host = 'localhost'; // Change this to your database host
-$username = 'root'; // Change this to your database username
-$password = ''; // Change this to your database password
-$database = 'scholarsphere';
+    // Database connection parameters
+    $host = 'localhost';
+    $username = 'root';
+    $password = '';
+    $database = 'scholarsphere';
 
-// Establish connection
-$conn = new mysqli($host, $username, $password, $database);
+    // Establish connection
+    $conn = new mysqli($host, $username, $password, $database);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Handle user registration
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
-    $email = $_POST['email'];
-    $user_name = $_POST['user_name'];
-    $password = $_POST['password'];
-    $university = $_POST['university'];
-    $department = $_POST['department'];
-    $emp_id = $_POST['employee_id'];
-	$_SESSION['university'] = $university;
-	$_SESSION['department'] = $department;
-	$_SESSION['emp_id'] = $emp_id;
-	$_SESSION['email'] = $email;
-	
-    
-    // Insert user data into the database
-    $sql = "INSERT INTO registerinfo (emp_id,email, user_name, password, university, department) VALUES ('$emp_id','$email', '$username', '$password', '$university', '$department')";
-    
-    if ($conn->query($sql) === TRUE) {
-        echo "Registration successful";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-}
 
-
-// Handle user login
+    // Handle user registration
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
+		$email = $_POST['email'];
+		$user_name = $_POST['user_name'];
+		$password = $_POST['password'];
+		$university = $_POST['university'];
+		$department = $_POST['department'];
+		$employee_id = $_POST['employee_id'];
+		
+		// File upload handling
+		$target_dir = "uploads/";
+		$target_file = $target_dir . basename($_FILES["avatar_file"]["name"]);
+		$uploadOk = 1;
+		$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+	
+		// Check if file is selected and uploaded successfully
+		if (isset($_FILES["avatar_file"]) && $_FILES["avatar_file"]["error"] === UPLOAD_ERR_OK) {
+			// Check if file is an image
+			$check = getimagesize($_FILES["avatar_file"]["tmp_name"]);
+			if ($check === false) {
+				echo "File is not an image.";
+				$uploadOk = 0;
+			}
+	
+			// Check file size (limit to 2MB)
+			if ($_FILES["avatar_file"]["size"] > 2000000) {
+				echo "Sorry, your file is too large.";
+				$uploadOk = 0;
+			}
+	
+			// Allow certain file formats
+			$allowed_extensions = array("jpg", "jpeg", "png", "gif");
+			if (!in_array($imageFileType, $allowed_extensions)) {
+				echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+				$uploadOk = 0;
+			}
+	
+			// Try to upload file if all checks are passed
+			if ($uploadOk == 1) {
+				if (move_uploaded_file($_FILES["avatar_file"]["tmp_name"], $target_file)) {
+					$avatar_filename = basename($_FILES["avatar_file"]["name"]);
+	
+					// Insert user data into database
+					$sql = "INSERT INTO registerinfo (emp_id, email, user_name, password, university, department, avatar_filename) 
+							VALUES ('$employee_id', '$email', '$user_name', '$password', '$university', '$department', '$avatar_filename')";
+					
+					if ($conn->query($sql) === TRUE) {
+						echo "Registration successful";
+					} else {
+						echo "Error: " . $sql . "<br>" . $conn->error;
+					}
+				} else {
+					echo "Sorry, there was an error uploading your file.";
+				}
+			}
+		} else {
+			echo "File upload error: " . $_FILES["avatar_file"]["error"];
+		}
+	}
+	// Handle user login
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     // Validate user credentials
     $employee_id = $_POST['employee_id'];
@@ -88,8 +121,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     if ($result->num_rows > 0) {
         // Fetch user data
         $row = $result->fetch_assoc();
-		$user_name = $row['user_name'];
-        $university = $row['university'];
+        $user_name = $row['user_name'];
+		$university = $row['university'];
         $department = $row['department'];
 		$employee_id = $row['emp_id'];
 		$email = $row['email'];
@@ -149,15 +182,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['forgot_password'])) {
         echo "Email not found in our records.";
     }
 }
-
-// Close connection
-$conn->close();
-?>
-
+	// Close connection
+	$conn->close();
+	?>
 
 
 
-	<body class="login-layout">
+
+<body class="login-layout">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -165,8 +197,11 @@ $conn->close();
 						<div class="login-container">
 							<div class="center">
 								<h1>
+									
 									<span class="white">Amity University</span>
+									
 								</h1>
+								
 							</div>
 
 							<div class="space-6"></div>
@@ -182,40 +217,43 @@ $conn->close();
 											<div class="space-6"></div>
 
 											<form method="post" action="">
-									<fieldset>
-										<label class="block clearfix">
-											<span class="block input-icon input-icon-right">
-												<input type="text" class="form-control" name="employee_id" placeholder="Employee ID" />
-												<i class="ace-icon fa fa-user"></i>
-											</span>
-										</label>
+    <fieldset>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="text" class="form-control" name="employee_id" placeholder="Employee ID" />
+                <i class="ace-icon fa fa-user"></i>
+            </span>
+        </label>
 
-										<label class="block clearfix">
-											<span class="block input-icon input-icon-right">
-												<input type="password" class="form-control" name="password" placeholder="Password" />
-												<i class="ace-icon fa fa-lock"></i>
-											</span>
-										</label>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="password" class="form-control" name="password" placeholder="Password" />
+                <i class="ace-icon fa fa-lock"></i>
+            </span>
+        </label>
 
-										<div class="space"></div>
+        <div class="space"></div>
 
-										<div class="clearfix">
-											<label class="inline">
-												<input type="checkbox" class="ace" />
-												<span class="lbl"> Remember Me</span>
-											</label>
+        <div class="clearfix">
+            <label class="inline">
+                <input type="checkbox" class="ace" />
+                <span class="lbl"> Remember Me</span>
+            </label>
 
-											<button type="submit" name="login" class="width-35 pull-right btn btn-sm btn-primary">
-												<i class="ace-icon fa fa-key"></i>
-												<span class="bigger-110">Login</span>
-											</button>
-										</div>
+            <button type="submit" name="login" class="width-35 pull-right btn btn-sm btn-primary">
+                <i class="ace-icon fa fa-key"></i>
+                <span class="bigger-110">Login</span>
+            </button>
+        </div>
 
-										<div class="space-4"></div>
-									</fieldset>
-								</form>
-								<div>
-									<div>
+        <div class="space-4"></div>
+    </fieldset>
+</form>
+
+
+											
+										</div><!-- /.widget-main -->
+
 										<div class="toolbar clearfix">
 											<div>
 												<a href="#" data-target="#forgot-box" class="forgot-password-link">
@@ -283,86 +321,92 @@ $conn->close();
 												<i class="ace-icon fa fa-users blue"></i>
 												New User Registration
 											</h4>
+											
 
 											<div class="space-6"></div>
 											<p> Enter your details to begin: </p>
 
-											<form method="post" action="">
-    <fieldset>
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="email" class="form-control" name="email" placeholder="Email" />
-                <i class="ace-icon fa fa-envelope"></i>
-            </span>
-        </label>
+											<form method="post" action="" enctype="multipart/form-data">
+												<fieldset>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="email" class="form-control" name="email" placeholder="Email" />
+															<i class="ace-icon fa fa-envelope"></i>
+														</span>
+													</label>
 
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="text" class="form-control" name="user_name" placeholder="Name" />
-                <i class="ace-icon fa fa-user"></i>
-            </span>
-        </label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" name="user_name" placeholder="Full Name" />
+															<i class="ace-icon fa fa-user"></i>
+														</span>
+													</label>
 
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="password" class="form-control" name="password" placeholder="Password" />
-                <i class="ace-icon fa fa-lock"></i>
-            </span>
-        </label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" class="form-control" name="password" placeholder="Password" />
+															<i class="ace-icon fa fa-lock"></i>
+														</span>
+													</label>
 
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="password" class="form-control" name="confirm_password" placeholder="Repeat password" />
-                <i class="ace-icon fa fa-retweet"></i>
-            </span>
-        </label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" class="form-control" name="confirm_password" placeholder="Repeat password" />
+															<i class="ace-icon fa fa-retweet"></i>
+														</span>
+													</label>
 
-        <!-- New fields for university, department, and employee ID -->
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="text" class="form-control" name="university" placeholder="University" />
-                <i class="ace-icon fa fa-university"></i>
-            </span>
-        </label>
+													<!-- New fields for university, department, and employee ID -->
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" name="university" placeholder="University" />
+															<i class="ace-icon fa fa-university"></i>
+														</span>
+													</label>
 
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="text" class="form-control" name="department" placeholder="Department" />
-                <i class="ace-icon fa fa-building"></i>
-            </span>
-        </label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" name="department" placeholder="Department" />
+															<i class="ace-icon fa fa-building"></i>
+														</span>
+													</label>
 
-        <label class="block clearfix">
-            <span class="block input-icon input-icon-right">
-                <input type="text" class="form-control" name="employee_id" placeholder="Employee ID" />
-                <i class="ace-icon fa fa-id-badge"></i>
-            </span>
-        </label>
-        
-        <!-- Existing checkbox for user agreement -->
-        <label class="block">
-            <input type="checkbox" class="ace" />
-            <span class="lbl">
-                I accept the
-                <a href="#">User Agreement</a>
-            </span>
-        </label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" name="employee_id" placeholder="Employee ID" />
+															<i class="ace-icon fa fa-id-badge"></i>
+														</span>
+													</label>
+															<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="file" class="form-control" name="avatar_file" accept="image/*" />
+															<i class="ace-icon fa fa-image"></i> Upload Profile Picture
+														</span>
+													</label>
+													<!-- Existing checkbox for user agreement -->
+													<label class="block">
+														<input type="checkbox" class="ace" />
+														<span class="lbl">
+															I accept the
+															<a href="#">User Agreement</a>
+														</span>
+													</label>
 
-        <div class="space-24"></div>
+													<div class="space-24"></div>
 
-        <div class="clearfix">
-            <button type="reset" class="width-30 pull-left btn btn-sm">
-                <i class="ace-icon fa fa-refresh"></i>
-                <span class="bigger-110">Reset</span>
-            </button>
+													<div class="clearfix">
+														<button type="reset" class="width-30 pull-left btn btn-sm">
+															<i class="ace-icon fa fa-refresh"></i>
+															<span class="bigger-110">Reset</span>
+														</button>
 
-            <button type="submit" name="register" class="width-65 pull-right btn btn-sm btn-success">
-                <span class="bigger-110">Register</span>
-                <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-            </button>
-        </div>
-    </fieldset>
-</form>
+														<button type="submit" name="register" class="width-65 pull-right btn btn-sm btn-success">
+															<span class="bigger-110">Register</span>
+															<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+														</button>
+													</div>
+												</fieldset>
+											</form>
 
 
 											
